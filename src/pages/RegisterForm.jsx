@@ -1,67 +1,74 @@
 import React, { useState } from 'react';
-import firebase from '../firebase';
-import firestore from '../firebase'
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
-import {useNavigate} from 'react-router-dom'
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import './Forms.css'
 
-const RegisterForm = () => {
+function RegisterForm() {
+  const navigate = useNavigate();
+  const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-  const db = getFirestore();
+  const [error, setError] = useState('');
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const register = async (e) => {
+    e.preventDefault();
+    setError('');
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = () => {
-    navigate('/login');// Navigate to the registration page
-  };
-
-  const handleRegister = async (email, password) => {
     try {
-      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log('User signed up:', user);
-  
-      const docRef = await addDoc(collection(db, "Users"), {
-        email: user.email,
-        password: user.password,
-        role: '',
+
+      console.log("has succeded");
+      await updateProfile(user, {
+        displayName: displayName
       });
-  
-      console.log("Document written with ID:", docRef.id);
+
+
+      navigate('/AfterReg'); // Redirect to the dashboard page after successful registration
     } catch (error) {
-      console.log('Signup error:', error.code, error.message);
+      setError(error.message);
     }
   };
+
   return (
-    <div className='container'>
-    <form onSubmit={handleRegister}>
-      <h2>Register</h2>
-      {error && <div>{error}</div>}
-      <label>
-        Email:
-        <input type="email" value={email} onChange={handleEmailChange} />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input type="password" value={password} onChange={handlePasswordChange} />
-      </label>
-      <br />
-      <button type="submit">Register</button>
-      <button type="button" onClick={handleLogin}>Login</button>
-    </form>
+    <div className='center'>
+      <div className='auth'>
+        <h1>Register</h1>
+        {error && <div className='auth__error'>{error}</div>}
+        <form onSubmit={register} name='register_form'>
+          <input
+            type='text'
+            value={displayName}
+            required
+            placeholder='Enter your display name'
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
+
+          <input
+            type='email'
+            value={email}
+            required
+            placeholder='Enter your email'
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <input
+            type='password'
+            value={password}
+            required
+            placeholder='Enter your password'
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button type='submit'>Register</button>
+        </form>
+        <p>
+          Already have an account? <Link to='/login'>Log in here</Link>
+        </p>
+      </div>
     </div>
   );
-};
+}
 
 export default RegisterForm;

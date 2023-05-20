@@ -6,20 +6,25 @@ body {
     background-color: #f2f2f2;
   }
   
-  /* Container styles */
   .container {
-    max-width: 400px;
+    width: 400px; /* Adjust the width to your desired size */
     margin: 0 auto;
+    margin-top: 10vh; /* Adjust the margin-top to position the container vertically */
     padding: 20px;
-    background-color: #fff;
+    background-color: gray;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+  
   
   /* Form styles */
   form {
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
+  }
+  label{
+    text-align: center;
   }
   
   input {
@@ -62,6 +67,6 @@ body {
     text-decoration: underline;
   }
   
-  h2{
+  h1,p{
     text-align: center;
   }
