@@ -13,6 +13,7 @@ const GoogleLogin = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        console.log("Success"+user);
         Navigate('AfterReg');
         // IdP data available using getAdditionalUserInfo(result)
         // ...
