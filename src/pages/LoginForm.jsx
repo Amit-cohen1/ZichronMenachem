@@ -19,7 +19,7 @@ function LoginForm() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      if (user.emailVerified) {
+      if (user.emailVerified()) {
         navigate('/');
       } else {
         setError('Please verify your email before logging in.');
