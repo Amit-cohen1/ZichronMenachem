@@ -3,6 +3,7 @@ import { auth, firestore } from '../firebase';
 import './MedicalStaffDashboard.css';
 import Background from '../components/Background';
 import { collection, query, where, getDocs } from 'firebase/firestore';
+import { Navigate } from 'react-router-dom';
 
 
 const searchPatientById = async (patientId, setSearchResults) => {
@@ -38,6 +39,7 @@ const MedicalStaffDashboard = () => {
     .then(() => {
         // Logout successful, redirect or handle accordingly
         console.log('User logged out successfully');
+        Navigate('/login'); 
         // Redirect to login page or perform other actions
       })
       .catch((error) => {
