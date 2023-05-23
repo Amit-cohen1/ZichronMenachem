@@ -60,10 +60,10 @@ function LoginForm() {
             childId: '',
             // Add additional user details as needed
           });  
+          console.log("User details written to Firestore with ID:", userDocRef.id);
           // Send email verification
           await sendEmailVerification(user);
-          
-          console.log("User details written to Firestore with ID:", userDocRef.id);
+
         }
   
         console.log("Success", user);
@@ -95,7 +95,6 @@ function LoginForm() {
       <div className='container1'>
         <h1>התחבר</h1>
         {error && <div className='auth__error'>{error}</div>}
-        <Form>
         <form onSubmit={login} name='login_form'>
           <input
             type='email'
@@ -115,7 +114,6 @@ function LoginForm() {
 
           <button type='submit'>התחבר</button>
         </form>
-        </Form>
         <p>
           אין לך חשבון? <Link to='/register'>צור חשבון כאן</Link>
         </p>
