@@ -1,17 +1,19 @@
 /* CSS for Signup and Login Pages */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
 
 /* Body styles */
 body {
-    font-family: Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  direction: rtl;
     background-color: #f2f2f2;
   }
   
   .container {
     width: 400px; /* Adjust the width to your desired size */
     margin: 0 auto;
-    margin-top: 10vh; /* Adjust the margin-top to position the container vertically */
+    margin-top: 15vh; /* Adjust the margin-top to position the container vertically */
     padding: 20px;
-    background-color: gray;
+    background-color: rgb(255, 255, 255);
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
@@ -24,10 +26,12 @@ body {
     margin: 0 auto;
   }
   label{
+    font-family: 'Open Sans', sans-serif;
     text-align: center;
   }
   
   input {
+    font-family: 'Open Sans', sans-serif;
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -35,6 +39,7 @@ body {
   }
   
   button {
+    font-family: 'Open Sans', sans-serif;
     padding: 10px;
     background-color: #007bff;
     color: #fff;
@@ -67,6 +72,7 @@ body {
     text-decoration: underline;
   }
   
-  h1,p{
+  h1,p,h2{
     text-align: center;
+    color: black;
   }

@@ -2,6 +2,8 @@ import React from 'react';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../firebase';
 import { Navigate } from 'react-router-dom';
+import GoogleLogo from '../pages/GoogleLogo.png';
+import "./GoogleLogin.css"
 
 const GoogleLogin = () => {
   const handleGoogleLogin = () => {
@@ -14,24 +16,26 @@ const GoogleLogin = () => {
         // The signed-in user info.
         const user = result.user;
         console.log("Success"+user);
-        Navigate('AfterReg');
+        Navigate('/');
         // IdP data available using getAdditionalUserInfo(result)
         // ...
       })
       .catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
+        let email = '';
+        if (error.customData && error.customData.email) {
+          email = error.customData.email;
+        }
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+        // Handle the error or display an appropriate message
       });
   };
+ 
 
   return (
-    <button onClick={handleGoogleLogin}>Sign in with Google</button>
+    <button className='GoogleBtn' onClick={handleGoogleLogin}> התחבר עם גוגל  
+    <img className='imageLogo' src={GoogleLogo} alt='GoogleLogo' /></button>
   );
 };
 

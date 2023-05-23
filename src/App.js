@@ -10,6 +10,7 @@ import ParentDashboard from './pages/ParentDashboard';
 import MedicalStaffDashboard from './pages/MedicalStaffDashboard';
 import AfterReg from './pages/AfterReg';
 
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -49,7 +50,7 @@ function DashboardSelector({ currentUser }) {
     case 'medicalStaff':
       return <MedicalStaffDashboard />;
     default:
-      return <LoginForm />;
+      return <AfterReg />;
   }
 }
 
