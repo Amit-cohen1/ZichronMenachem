@@ -51,7 +51,7 @@ function RegisterForm() {
   return (
     <Background>
     <div className='center'>
-      <div className='container'>
+      <div className='container1'>
         <h1>הירשם</h1>
         {error && <div className='auth__error'>{error}</div>}
         <form onSubmit={register} name='register_form'>

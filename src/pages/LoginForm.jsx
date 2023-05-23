@@ -21,53 +21,65 @@ function LoginForm() {
   const login = async (e) => {
     e.preventDefault();
     setError('');
-
+  
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+  
 
-      if (user.emailVerified()) {
+      if (user.emailVerified) {
+        console.log("flag");
         navigate('/');
       } else {
         setError('Please verify your email before logging in.');
-        sendEmailVerification(user);
+        sendEmailVerification(user)
+          .then(() => {
+            console.log('Email verification sent');
+          })
+          .catch((error) => {
+            console.error('Error sending email verification:', error);
+          });
       }
     } catch (error) {
       setError('Invalid email or password');
     }
   };
+  
 
   // Google Login button 
 
   const handleGoogleLogin = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
-      .then(async (result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
+      .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        // The signed-in user info.
         const user = result.user;
   
-        // Check if the user is new (registered for the first time)
-        if (result.additionalUserInfo.isNewUser()) {
-          // Write user details to Firestore
+        if (result.additionalUserInfo.isNewUser) {
           const usersCollectionRef = collection(firestore, 'users');
-          const userDocRef = await addDoc(usersCollectionRef, {
+          addDoc(usersCollectionRef, {
             displayName: user.displayName,
             email: user.email,
-            roll: '',
+            role: '',
             childId: '',
-            // Add additional user details as needed
-          });  
-          console.log("User details written to Firestore with ID:", userDocRef.id);
-          // Send email verification
-          await sendEmailVerification(user);
-
+          })
+            .then(() => {
+              console.log('User details written to Firestore');
+            })
+            .catch((error) => {
+              console.error('Error writing user details to Firestore:', error);
+            });
+          sendEmailVerification(user)
+            .then(() => {
+              console.log('Email verification sent');
+            })
+            .catch((error) => {
+              console.error('Error sending email verification:', error);
+            });
         }
   
-        console.log("Success", user);
-        // Check if the user's email is verified
+        console.log('Success', user);
         if (!user.emailVerified) {
           navigate('/AfterReg');
         } else {
@@ -85,6 +97,7 @@ function LoginForm() {
         // Handle the error or display an appropriate message
       });
   };
+  
   
   
 
