@@ -9,6 +9,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ParentDashboard from './pages/ParentDashboard';
 import MedicalStaffDashboard from './pages/MedicalStaffDashboard';
 import AfterReg from './pages/AfterReg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
   }, []);
 
   return (
+    
     <Router>
       <Routes>
         <Route path="/login" element={<LoginForm />} />

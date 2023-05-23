@@ -8,6 +8,9 @@ import { collection, addDoc } from 'firebase/firestore';
 import Background from '../components/Background';
 import GoogleLogo from '../pages/GoogleLogo.png';
 import "../components/GoogleLogin.css"
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -58,6 +61,9 @@ function LoginForm() {
             // Add additional user details as needed
           });  
           console.log("User details written to Firestore with ID:", userDocRef.id);
+          // Send email verification
+          await sendEmailVerification(user);
+
         }
   
         console.log("Success", user);
@@ -84,8 +90,9 @@ function LoginForm() {
 
   return (
     <Background>
+     <Container>
     <div className='center'>
-      <div className='container'>
+      <div className='container1'>
         <h1>התחבר</h1>
         {error && <div className='auth__error'>{error}</div>}
         <form onSubmit={login} name='login_form'>
@@ -116,6 +123,7 @@ function LoginForm() {
         </p>
       </div>
     </div>
+    </Container>
     </Background>
   );
 }
