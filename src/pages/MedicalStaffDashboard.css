@@ -1,0 +1,57 @@
+/* styles.css */
+
+/* Global styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  .container-SearchBox {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Medical staff dashboard styles */
+  .logout-button {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+  }
+  
+  .hello-doctor {
+    margin-top: 70px;
+    text-align: center;
+    font-size: 36px;
+    font-style: italic;
+  }
+  
+  .searchBar {
+    width: 492px;
+    height: 37px;
+    margin-top: 50px;
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 20px;  
+    margin-left: 30px;
+    border: none;
+    border-radius: 10px;
+}
+
+  
+  .searchBarBtn {
+    width: 120px;
+    height: 37px;
+    font-size: 16px;
+    background-color: #A4D65E;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-style: italic;
+    margin-top: 50px;
+    margin-right: 30px;
+  }
+  
+  /* Add more styles as needed */
+  
+  
