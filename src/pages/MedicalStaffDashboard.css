@@ -10,6 +10,7 @@ body, html {
   .container-SearchBox {
     display: flex;
     justify-content: center;
+    
   }
   
   /* Medical staff dashboard styles */
@@ -32,6 +33,7 @@ body, html {
     margin-top: 50px;
     text-align: center;
     font-style: italic;
+    font-size: large;
     margin-bottom: 20px;  
     margin-left: 30px;
     border: none;
@@ -40,8 +42,8 @@ body, html {
 
   
   .searchBarBtn {
-    width: 120px;
-    height: 37px;
+    width: 150px;
+    height: 60px;
     font-size: 16px;
     background-color: #A4D65E;
     color: #ffffff;
