@@ -8,49 +8,6 @@ import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import Background from '../components/Background';
 
-
- const ProfileField = ({ label, name,profileData, handleInputChange, isEditing }) => {
-
-    const [isFocused, setIsFocused] = useState(false);
-
-    const handleFocus = () => {
-      setIsFocused(true);
-    };
-
-    const handleBlur = () => {
-      setIsFocused(false);
-    };
-
-    return (
-      <label>
-        {label}:
-        <input
-          type="text"
-          key={name}
-          name={name}
-          value={profileData[name]}
-          onChange={(e) => handleInputChange(e, name)}
-          disabled={!isEditing}
-          //style={{ background: isFocused ? 'yellow' : 'white'}}
-        />
-      </label>
-    );
-  };
-
-  const TextAreaField = ({ label, name, profileData,handleInputChange, isEditing }) => {
-    return (
-      <label>
-        {label}:
-        <textarea
-          name={name}
-          key={name}
-          value={profileData[name]}
-          onChange={handleInputChange}
-          disabled={!isEditing}
-        />
-      </label>
-    );
-  };
 const ParentDashboard = () => {
   // Content and functionality for the parent dashboard
 
@@ -227,7 +184,56 @@ const ParentDashboard = () => {
   //const [focusedField, setFocusedField] = useState(null);
 
   // component of the profile fields- gets the label (such as first name) and its name
- 
+  const ProfileField = ({ label, name }) => {
+
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+      setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+      setIsFocused(false);
+    };
+
+    return (
+      <label>
+        {label}:
+        <input
+          type="text"
+          key={name}
+          name={name}
+          value={profileData[name]}
+          // onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e, name)}
+          //disabled={!isEditing} // set disabled to true when not in editing mode
+          //disabled={!isEditing || !isFocused}
+         // readOnly={!isEditing || !isFocused}
+          readOnly={!isEditing}
+          //onFocus={handleFocus}
+          //onBlur={handleBlur}
+          //onBlur={() => setFocusedField(null)}
+          //style={{ background: isFocused ? 'yellow' : 'white'}}
+        />
+      </label>
+    );
+  };
+
+  const TextAreaField = ({ label, name }) => {
+    return (
+      <label>
+        {label}:
+        <textarea
+          name={name}
+          key={name}
+          value={profileData[name]}
+          onChange={handleInputChange}
+          //onChange={(e) => handleInputChange(e, name)}
+          disabled={!isEditing}
+        />
+      </label>
+    );
+  };
 
 
   //const [profileData, setProfileData] = useState(null);
@@ -253,44 +259,161 @@ const ParentDashboard = () => {
       <div>
         <h4>פרופיל ילד</h4>
         <form>
-          <ProfileField label="First Name" name="firstName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} />
-          <ProfileField label="Last Name" name="lastName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} />
-          <ProfileField label="ID" name="id" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Doctor" name="doctor" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Kupat Holim" name="hmo" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Mother's Name" name="motherName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Father's Name" name="fatherName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Date of Birth" name="birthDate" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Guide" name="guide" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Gender" name="gender" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Card" name="card" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Age" name="age" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Mother's Phone Number" name="momPhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Father's Phone Number" name="dadPhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Email" name="email" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="City" name="city" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Street" name="street" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="House's number" name="houseNum" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Postal Code" name="postalCode" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Hospital" name="hospital" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="End Date of Active Treatment" name="endActiveTreatment" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Diagnosis" name="diagnosis" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Catheter" name="catheter" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Doctor's Phone Number" name="docPhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Hebrew Date of Birth" name="hebrewBirthDate" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Home Phone Number" name="homePhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Mother's Work Phone Number" name="momWorkPhone" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Father's Work Phone Number" name="dadWorkPhone" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="Allergies" name="allergies" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          
+          <ProfileField label="First Name" name="firstName" />
+          <ProfileField label="Last Name" name="lastName" />
+          <ProfileField label="ID" name="id" />
+          <ProfileField label="Doctor" name="doctor" />
+          <ProfileField label="Kupat Holim" name="hmo" />
+          <ProfileField label="Mother's Name" name="motherName" />
+          <ProfileField label="Father's Name" name="fatherName" />
+          <ProfileField label="Date of Birth" name="birthDate" />
+          <ProfileField label="Guide" name="guide" />
+          <ProfileField label="Gender" name="gender" />
+          <ProfileField label="Card" name="card" />
+          <ProfileField label="Age" name="age" />
+          <ProfileField label="Mother's Phone Number" name="momPhoneNumber" />
+          <ProfileField label="Father's Phone Number" name="dadPhoneNumber" />
+          <ProfileField label="Email" name="email" />
+          <ProfileField label="City" name="city" />
+          <ProfileField label="Street" name="street" />
+          <ProfileField label="House's number" name="houseNum" />
+          <ProfileField label="Postal Code" name="postalCode" />
+          <ProfileField label="Hospital" name="hospital" />
+          <ProfileField label="End Date of Active Treatment" name="endActiveTreatment" />
+          <ProfileField label="Diagnosis" name="diagnosis" />
+          <ProfileField label="Catheter" name="catheter" />
+          <ProfileField label="Doctor's Phone Number" name="docPhoneNumber" />
+          <ProfileField label="Hebrew Date of Birth" name="hebrewBirthDate" />
+          <ProfileField label="Home Phone Number" name="homePhoneNumber" />
+          <ProfileField label="Mother's Work Phone Number" name="momWorkPhone" />
+          <ProfileField label="Father's Work Phone Number" name="dadWorkPhone" />
+          <ProfileField label="Allergies" name="allergies" />
+          {/*<label>
+            Name:
+            <input 
+              type="text" 
+              name="name"
+              value={profileData.name} 
+              onChange={handleInputChange}
+              disabled={!isEditing} 
+            />
+          </label>
+          <lable>
+            ID:
+            <input 
+            type="text" 
+            name="id"
+            value={profileData.id} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </lable>
+          <lable>
+            Doctor:
+            <input 
+            type="text" 
+            name="doctor"
+            value={profileData.doctor} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </lable>
+          <lable>
+            Mother's Name:
+            <input 
+            type="text" 
+            name="motherName"
+            value={profileData.motherName} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </lable>
+          <lable>
+            Father's Name:
+            <input 
+            type="text" 
+            name="fatherName"
+            value={profileData.fatherName} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </lable>
+          <lable>
+            Date of Birth:
+            <input 
+            type="text" 
+            name="birthDate"
+            value={profileData.birthDate} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </lable>
+          <lable>
+            Phone Number:
+            <input 
+            type="text" 
+            name="phoneNumber"
+            value={profileData.phoneNumber} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </lable>
+          <lable>
+            Hospital:
+            <input 
+            type="text" 
+            name="hospital"
+            value={profileData.hospital} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </lable>
+          <lable>
+            Diagnosis:
+            <input 
+            type="text" 
+            name="diagnosis"
+            value={profileData.diagnosis} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </lable>
+          <lable>
+            Allergies:
+            <input 
+            type="text" 
+            name="allergies"
+            value={profileData.allergies} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </lable>*/}
 
         </form>
       </div>
 
       <div>
         <form>
-          <TextAreaField label="Medicines" name="medicines" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <TextAreaField label="Additional Comments" name="comments" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+          <TextAreaField label="Medicines" name="medicines" />
+          <TextAreaField label="Additional Comments" name="comments" />
+          {/*<label>
+            Medicines:
+            <textarea 
+            name="medicines"
+            value={profileData.medicines} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </label>
+          <label>
+            Additional Comments:
+            <textarea 
+            name="comments"
+            value={profileData.comments} 
+            onChange={handleInputChange}
+            disabled={!isEditing} 
+            />
+          </label>*/}
         </form>
       </div>
 
