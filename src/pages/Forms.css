@@ -5,7 +5,7 @@
 body {
   font-family: 'Open Sans', sans-serif;
   direction: rtl;
-    background-color: #f2f2f2;
+   background-color: #f2f2f2;
   }
   
   .container1 {
@@ -16,6 +16,7 @@ body {
     background-color: rgb(255, 255, 255);
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Open Sans', sans-serif;
   }
   
   
@@ -75,11 +76,13 @@ body {
   }
   
   h1,p,h2,h3{
+    font-family: 'Open Sans', sans-serif;
     text-align: center;
     color: black;
   }
 
   .container2 {
+    font-family: 'Open Sans', sans-serif;
     width: 80%; /* Adjust the width to your desired size */
     margin: 0 auto;
     margin-top: 15vh; /* Adjust the margin-top to position the container vertically */
@@ -89,12 +92,14 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
  .adminContainer{
+  font-family: 'Open Sans', sans-serif;
   margin: 15px;
   background-color: rgba(77, 80, 81, 0.315);
  }
   
   
   .searchBar1{
+    font-family: 'Open Sans', sans-serif;
     font-family: 'Open Sans', sans-serif;
     margin: 20px;
     margin-right: 35%;
@@ -106,6 +111,7 @@ body {
    
   }
   .AdminBtn{
+    font-family: 'Open Sans', sans-serif;
     background-color: #A4D65E;  
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     border: 1px solid #000000;

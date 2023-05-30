@@ -57,6 +57,7 @@ function LoginForm() {
         const user = result.user;
   
         if (result.additionalUserInfo.isNewUser) {
+          console.log("new user login");
           const usersCollectionRef = collection(firestore, 'users');
           addDoc(usersCollectionRef, {
             displayName: user.displayName,
@@ -97,8 +98,6 @@ function LoginForm() {
         // Handle the error or display an appropriate message
       });
   };
-  
-  
   
 
   return (

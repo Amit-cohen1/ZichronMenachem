@@ -24,9 +24,7 @@ const AdminDashboard = () => {
 
   const db = getFirestore();
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-    console.log("the val is:", event.target.value)
-    
+    setSearchTerm(event.target.value);    
   };
 
   const handleSearchSubmit = async (e) => {
@@ -37,7 +35,8 @@ const AdminDashboard = () => {
     const qs = await getDocs(q);
     qs.forEach((doc) => {
        if (doc.exists){
-          console.log(doc.data())
+          console.log("success with finding user");
+          console.log(doc.data());
 
        }
        
