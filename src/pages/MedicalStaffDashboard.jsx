@@ -3,8 +3,8 @@ import { auth, firestore } from '../firebase';
 import './MedicalStaffDashboard.css';
 import Background from '../components/Background';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { Navigate } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import LogoutAction from '../components/LogoutAction';
 
 const searchPatientById = async (patientId, setSearchResults) => {
   try {
@@ -29,25 +29,15 @@ const searchPatientById = async (patientId, setSearchResults) => {
   }
 };
 
+const handleLogout = () => {
+ <LogoutAction />
+};
 
 const MedicalStaffDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleLogout = () => {
-    auth.signOut()
-    .then(() => {
-        // Logout successful, redirect or handle accordingly
-        console.log('User logged out successfully');
-        Navigate('/login'); 
-        // Redirect to login page or perform other actions
-      })
-      .catch((error) => {
-        // An error occurred while logging out
-        console.error('Error logging out:', error);
-        // Handle the error, display a message, etc.
-      });
-  };
+ 
   const handleSearch = () => {
     // Trigger searchPatientById with the searchQuery and setSearchResults
     searchPatientById(searchQuery, setSearchResults);
