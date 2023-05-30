@@ -8,30 +8,19 @@ import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import Background from '../components/Background';
 
-
- const ProfileField = ({ label, name,profileData, handleInputChange, isEditing }) => {
-
-    const [isFocused, setIsFocused] = useState(false);
-
-    const handleFocus = () => {
-      setIsFocused(true);
-    };
-
-    const handleBlur = () => {
-      setIsFocused(false);
-    };
+// component of the profile fields- gets the label (such as first name), its name
+ const ProfileField = ({ label, name, profileData, handleInputChange, isEditing }) => {
 
     return (
       <label>
         {label}:
         <input
           type="text"
-          key={name}
+          //key={name}
           name={name}
           value={profileData[name]}
           onChange={(e) => handleInputChange(e, name)}
           disabled={!isEditing}
-          //style={{ background: isFocused ? 'yellow' : 'white'}}
         />
       </label>
     );
@@ -43,7 +32,7 @@ import Background from '../components/Background';
         {label}:
         <textarea
           name={name}
-          key={name}
+          //key={name}
           value={profileData[name]}
           onChange={handleInputChange}
           disabled={!isEditing}
@@ -51,47 +40,10 @@ import Background from '../components/Background';
       </label>
     );
   };
+
+
 const ParentDashboard = () => {
   // Content and functionality for the parent dashboard
-
-
-  //
-  //fake data for trial
-  //
-  /*const [profileData, setProfileData] = useState({
-    firstName: 'Israel',
-    lastName: 'Israeli',
-    id:'123456789',
-    doctor: 'Dr. Israel Israeli',
-    hmo: 'Clalit',
-    motherName: 'Israela Israeli',
-    fatherName: 'Israel Israeli',
-    birthDate: '01-01-2000',
-    guide: 'Madrich',
-    gender: 'male',
-    card: '123456',
-    age: '5.5',
-    momPhoneNumber: '123-456-7890',
-    dadPhoneNumber: '123-456-7890',
-    email: 'abcdefg@gmail.com',
-    city: 'Jerusalem',
-    street: 'street street',
-    houseNum: '2',
-    postalCode: '123456',
-    hospital: 'ABC Hospital',
-    endActiveTreatment: '01-01-2000',
-    diagnosis: 'Some diagnosis',
-    catheter: 'yes',
-    docPhoneNumber: '123-456-7890',
-    hebrewBirthDate: 'כה באייר',
-    homePhoneNumber: '02-1234567',
-    momWorkPhone: '02-1234567',
-    dadWorkPhone: '02-1234567',
-    allergies: 'Allergy 1, Allergy 2',
-    medicines: 'Medicine 1, Medicine 2',
-    comments: 'Some additional comments',
-  });
-  */
 
   //State for profile data and editing mode
   const[profileData, setProfileData] = useState({
@@ -131,27 +83,6 @@ const ParentDashboard = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   // fetch patient data on component mount
-  /*useEffect(() => {
-    const patientRef = ref(database, 'patients/123');
-
-    const fetchPatientData = () => {
-      //listen for changes in the patient data
-      onValue(patientRef, (snapshot) => {
-        const data = snapshot.val();
-        setProfileData(data);
-      });
-    };
-
-    fetchPatientData();
-
-    return () => {
-      // clean up the event listener when component unmounts
-      off(patientRef);
-    };
-
-  }, []);*/
-
-  // fetch patient data on component mount
   useEffect(() => {
     const fetchPatientData = () => {
       const patientDoc = doc(firestore, 'Childrens', 'pUitCjO9ClIFIRDVrA8G');
@@ -179,19 +110,8 @@ const ParentDashboard = () => {
     setIsEditing(true);
   };
 
-  // Handle clock event for Save button
-  /*const handleSaveClick = () => {
-    try {
-      //save the updated profileData to the database
-      const patientRef = ref(database, 'patients/123');
-      //set(ref(database, 'patiennts/123'), profileData);
-      set(patientRef, profileData);
-      setIsEditing(false);
-    } catch (error) {
-      console.error('Error saving data:', error);
-    }
-  };*/
 
+  // Handle click event for Save button
   const handleSaveClick = async () => {
     try {
       const patientDoc = doc(firestore, 'Childrens', 'pUitCjO9ClIFIRDVrA8G');
@@ -202,15 +122,6 @@ const ParentDashboard = () => {
     }
   };
 
-
-  // Handle input change event
- /* const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setProfileData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };*/
 
   // Handle input change event
   const handleInputChange = (event) => {
@@ -224,18 +135,9 @@ const ParentDashboard = () => {
       }));
     };
 
-  //const [focusedField, setFocusedField] = useState(null);
-
-  // component of the profile fields- gets the label (such as first name) and its name
- 
 
 
-  //const [profileData, setProfileData] = useState(null);
- // const [isEditing, setIsEditing] = useState(false);
-
-
-
-// component for the option below the patient details. takes to other pages.
+// component for the options below the patient details. takes to other pages.
  const Square = ({ text, to }) => (
   <div>
     <h5>{text}</h5>
@@ -282,7 +184,6 @@ const ParentDashboard = () => {
           <ProfileField label="Mother's Work Phone Number" name="momWorkPhone" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
           <ProfileField label="Father's Work Phone Number" name="dadWorkPhone" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
           <ProfileField label="Allergies" name="allergies" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          
 
         </form>
       </div>
@@ -294,11 +195,6 @@ const ParentDashboard = () => {
         </form>
       </div>
 
-     {/* <div>
-        <button type="button" onClick={isEditing ? handleSaveClick : handleEditClick}>
-          {isEditing? 'Save' : 'Edit'}
-        </button>
-        </div> */}
       <div>
       {isEditing ? (
       <button type="button" onClick={handleSaveClick}> Save </button>
@@ -308,26 +204,7 @@ const ParentDashboard = () => {
       </div>
 
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          {/*<div>
-            <h5>Medical History</h5>
-            <Link to="/medical-history">
-              <button>Click here</button>
-            </Link>
-          </div>
-          <div>
-            <h5>Camp Registration Form</h5>
-            <Link to="/camp-registration">
-              <button>Click here</button>
-            </Link>
-          </div>
-          <div>
-            <h5>Uploading Documents</h5>
-            <Link to="/upload-documents">
-              <button>Click here</button>
-            </Link>
-          </div>*/}
-      
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>   
           <Square text="Medical History" to="/medical-history" />
           <Square text="Camp Registration Form" to="/camp-registration" />
           <Square text="Uploading Documents" to="/upload-documents" />
