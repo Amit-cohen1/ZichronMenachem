@@ -8,8 +8,8 @@ import { collection, addDoc } from 'firebase/firestore';
 import Background from '../components/Background';
 import GoogleLogo from '../pages/GoogleLogo.png';
 import "../components/GoogleLogin.css"
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
+// import Container from 'react-bootstrap/Container';
+
 
 
 function LoginForm() {
@@ -57,6 +57,7 @@ function LoginForm() {
         const user = result.user;
   
         if (result.additionalUserInfo.isNewUser) {
+          console.log("new user login");
           const usersCollectionRef = collection(firestore, 'users');
           addDoc(usersCollectionRef, {
             displayName: user.displayName,
@@ -98,18 +99,17 @@ function LoginForm() {
       });
   };
   
-  
-  
 
   return (
     <Background>
-     <Container>
-    <div className='center'>
+   
+   
       <div className='container1'>
         <h1>התחבר</h1>
         {error && <div className='auth__error'>{error}</div>}
         <form onSubmit={login} name='login_form'>
           <input
+            className='inputLogin'
             type='email'
             value={email}
             required
@@ -118,6 +118,7 @@ function LoginForm() {
           />
 
           <input
+            className='inputLogin'
             type='password'
             value={password}
             required
@@ -135,8 +136,6 @@ function LoginForm() {
     <img className='imageLogo' src={GoogleLogo} alt='GoogleLogo' /></button>
         </p>
       </div>
-    </div>
-    </Container>
     </Background>
   );
 }

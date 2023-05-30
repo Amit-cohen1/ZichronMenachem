@@ -34,7 +34,7 @@ function RegisterForm() {
       const userDocRef = await addDoc(usersCollectionRef, {
         displayName: displayName,
         email: email,
-        roll: '',
+        role: '',
         childId: '',
         // Add additional user details as needed
       });

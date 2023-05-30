@@ -1,7 +1,8 @@
 /* styles.css */
-
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
 /* Global styles */
 body, html {
+   font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
     height: 100%;
@@ -15,16 +16,19 @@ body, html {
   
   /* Medical staff dashboard styles */
   .logout-button {
-    position: absolute;
-    top: 8px;
+    text-align: center;
+    position: relative;
+    top: 10px;
     right: 10px;
+    height: 40px;
+    background-color:#000000;
+    border-radius: 25px;
   }
   
   .hello-doctor {
     margin-top: 70px;
     text-align: center;
     font-size: 36px;
-    font-style: italic;
   }
   
   .searchBar {
@@ -32,7 +36,6 @@ body, html {
     height: 37px;
     margin-top: 50px;
     text-align: center;
-    font-style: italic;
     font-size: large;
     margin-bottom: 20px;  
     margin-left: 30px;
@@ -42,8 +45,8 @@ body, html {
 
   
   .searchBarBtn {
-    width: 150px;
-    height: 60px;
+    width: 120px;
+    height: 40px;
     font-size: 16px;
     background-color: #A4D65E;
     color: #ffffff;
@@ -52,6 +55,8 @@ body, html {
     font-style: italic;
     margin-top: 50px;
     margin-right: 30px;
+    margin-left: 20px;
+    border-radius: 25px;
   }
   
   /* Add more styles as needed */
