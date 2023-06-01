@@ -4,7 +4,7 @@ import './MedicalStaffDashboard.css';
 import Background from '../components/Background';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import LogoutAction from '../components/LogoutAction';
+
 
 const searchPatientById = async (patientId, setSearchResults) => {
   try {
@@ -60,33 +60,6 @@ useEffect(() => {
     searchPatientById(searchQuery, setSearchResults);
   };
 
-<<<<<<< HEAD
-    return (
-      <Background>
-        <div>
-          <button className="logout-button" onClick={handleLogout}>התנתק</button>
-          <h2 className="hello-doctor">שלום {userName}</h2>
-          <div className='container-SearchBox'>
-            <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
-            <div>
-              <input
-                className="searchBar"
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="חיפוש מטופל לפי תעודת זהות"
-              />
-            </div>
-          </div>
-          {/* Display search results here */}
-          <div>
-            {searchResults.map((patient) => (
-              <div key={patient.id}>
-                {/* Display patient details */}
-                <p>{patient.id} {patient.FirstName}</p>
-              </div>
-            ))}
-=======
   return (
     <Background>
       <div>
@@ -102,8 +75,8 @@ useEffect(() => {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="חיפוש מטופל לפי תעודת זהות"
             />
->>>>>>> master
           </div>
+        </div>
         </div>
       </Background>
     );
