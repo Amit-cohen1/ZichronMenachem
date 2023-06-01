@@ -59,7 +59,6 @@ const MedicalStaffDashboard = () => {
         <button className="logout-button" onClick={handleLogout}>התנתק</button>
         <h2 className="hello-doctor">שלום ישראל ישראלי</h2>
         <div className='container-SearchBox'>
-          <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
           <div>
             <input
               className="searchBar"
@@ -68,6 +67,7 @@ const MedicalStaffDashboard = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="חיפוש מטופל לפי תעודת זהות"
             />
+             <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
           </div>
         </div>
         {/* Display search results here */}
