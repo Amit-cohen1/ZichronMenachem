@@ -37,7 +37,7 @@ const UserEmailContainer = ({userEmail}) => {
                          <option value="medicalStaff">medicalStaff</option>
                          <option value="parent">parent</option>
                      </select>
-                     <button value={userEmail} onClick={handleClick}>yes</button>
+                     <button value={userEmail} onClick={handleClick}>החל</button>
                     </label>
                     
                     </div>

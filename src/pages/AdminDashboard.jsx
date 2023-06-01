@@ -4,6 +4,7 @@ import './Forms.css'; // Import the CSS file
 import { collection, query, where, getDocs, getFirestore, setDoc, doc } from "firebase/firestore";
 import Background from '../components/Background';
 import UserEmailContainer from '../components/UserEmailContainer';
+import './AdminDashboard.css';
 const AdminDashboard = () => {
 
   // Content and functionality for the admin dashboard
@@ -12,6 +13,16 @@ const AdminDashboard = () => {
   const [userEmail, setUserEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const db = getFirestore();
+  const [userName, setUserName] = useState(''); // Initialize with a default username
+
+// Fetch the username from Firebase auth when the component mounts
+useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      setUserName(user.displayName);
+    }
+}, []);
+
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -64,28 +75,30 @@ const AdminDashboard = () => {
 
 
   return (
-    <div className='container'>
-      <h2>Welcome, Admin!</h2>
+    <Background>
+    <button className="logout-button" onClick={handleLogout}>התנתק</button>
+        <h2 className="hello-doctor">שלום {userName}</h2>
       {/* Admin-specific content */}
-      <div className='adminContainer'>
-        <input className='searchBar1' type="text" placeholder="הכנס מייל" value={searchTerm} onChange={handleSearchChange} />
-        <button className='AdminBtn' type="button"  value= {searchTerm} onClick={handleSearchSubmit}>חפש</button>
+      <div className="containerMain">
+      <div className="containerSearchBox">
+        <input className='searchBarAdmin' type="text" placeholder="הכנס כתובת אימייל" value={searchTerm} onChange={handleSearchChange} />
+        <button className='AdminBtn1' type="button"  value= {searchTerm} onClick={handleSearchSubmit}>חפש</button>
           {showUserEmail && <UserEmailContainer userEmail={userEmail} />}
       </div>
 
       <br/><p/>
-      <div className='container'>
-        <h2> List of new users</h2>
+      
+        <h3 className="Headline"> רשימת משתמשים חדשים</h3>
         <div id = "1">
-            <button className='AdminBtn' type="button" onClick={handelAlot}>נא לחץ כאן על מנת להציג</button>
+          <p> <button className='AdminBtn1' type="button" onClick={handelAlot}>נא לחץ כאן על מנת להציג</button></p>
+           
             {userEmails.map((email, index) => (
           <UserEmailContainer key={index} userEmail={email} />
         ))}
         </div>      
     </div>
-</div>
-    
-    
+</Background>
+  
   );
   };
 
