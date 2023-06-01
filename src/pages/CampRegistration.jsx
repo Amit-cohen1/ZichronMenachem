@@ -282,7 +282,6 @@ const ConsentPage = ({ onBack, onSubmit }) => {
     };
     
     const fieldGroups = [
-        
         [
             { label: 'מידת חולצה', name: 'shirtSize' },
         ],
@@ -360,7 +359,7 @@ const CustomField = ({ label, value, onChange, hasOptions, hasDate, dateLabel })
   
     return (
 
-        <div>
+        <div className='custom-field'>
             <label>
                 {label}:
                 {hasOptions ? (

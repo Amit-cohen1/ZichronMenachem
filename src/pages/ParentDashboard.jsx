@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 //import { database } from '../firebase';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
+import {auth} from '../firebase';
 import Background from '../components/Background';
 
 // component of the profile fields- gets the label (such as first name), its name
@@ -42,7 +43,18 @@ import Background from '../components/Background';
   };
 
 
+
 const ParentDashboard = () => {
+  const handleLogout = () => {
+    auth.signOut()
+      .then(() => {
+        console.log('User logged out successfully');
+        // Perform any additional cleanup or redirection logic here
+      })
+      .catch((error) => {
+        console.error('Error logging out:', error);
+      });
+  };
   // Content and functionality for the parent dashboard
 
   //State for profile data and editing mode
@@ -150,6 +162,7 @@ const ParentDashboard = () => {
   return (
     <Background>
     <div>
+      <button className="logout-button" onClick={handleLogout}>התנתק</button> 
       <h2>Welcome, Parent!</h2>
       {/* Parent-specific content */}
       <div>
