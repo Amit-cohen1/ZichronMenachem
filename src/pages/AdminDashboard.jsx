@@ -13,6 +13,16 @@ const AdminDashboard = () => {
   const [userEmail, setUserEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const db = getFirestore();
+  const [userName, setUserName] = useState(''); // Initialize with a default username
+
+// Fetch the username from Firebase auth when the component mounts
+useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      setUserName(user.displayName);
+    }
+}, []);
+
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -66,7 +76,6 @@ const AdminDashboard = () => {
 
   return (
     <Background>
-    
     <button className="logout-button" onClick={handleLogout}>התנתק</button>
         <h2 className="hello-doctor">שלום {userName}</h2>
       {/* Admin-specific content */}
@@ -88,9 +97,8 @@ const AdminDashboard = () => {
         ))}
         </div>      
     </div>
-</div>
-    
-    
+</Background>
+  
   );
   };
 
