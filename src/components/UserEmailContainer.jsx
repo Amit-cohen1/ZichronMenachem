@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Await } from 'react-router-dom/dist';
 import { collection, query, where, getDocs, getFirestore, setDoc, doc, updateDoc } from "firebase/firestore";
-import { auth } from '../firebase';
-import Dropdown from 'react-bootstrap/Dropdown';
-import  DropdownButton  from 'react-bootstrap/DropdownButton';
 import './UserEmailContainer.css'; // Import the CSS file
 const db = getFirestore();
 
