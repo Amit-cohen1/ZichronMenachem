@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import firebase from '../firebase';
-import firestore from '../firebase';
 import { auth } from '../firebase';
-import { BrowserRouter as Router, Route, Switch, Redirect, useNavigate } from 'react-router-dom';
-import RegisterForm from './RegisterForm';
 import './Forms.css'; // Import the CSS file
 import { collection, query, where, getDocs, getFirestore, setDoc, doc } from "firebase/firestore";
-import { Await } from 'react-router-dom/dist';
 import Background from '../components/Background';
-import userCard from '../components/UserEmailContainer'
-import Dropdown from 'react-bootstrap/Dropdown';
 import UserEmailContainer from '../components/UserEmailContainer';
 import './AdminDashboard.css';
 const AdminDashboard = () => {
@@ -19,23 +12,16 @@ const AdminDashboard = () => {
   const [showUserEmail, setShowUserEmail] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [userName, setUserName] = useState(''); // Initialize with a default username
-
-  // Fetch the username from Firebase auth when the component mounts
-  useEffect(() => {
-      const user = auth.currentUser;
-      if (user) {
-        setUserName(user.displayName);
-      }
-  }, []);
-
   const db = getFirestore();
+
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);    
+    setSearchTerm(event.target.value);
+    console.log("the val is:", event.target.value)
+    
   };
   const handleSearchSubmit = async (e) => {
     const q = query(
-      collection(db,"users"),
+      collection(db,"Users"),
       where("email", "==", e.target.value)
     );
     const qs = await getDocs(q);
@@ -102,7 +88,7 @@ const AdminDashboard = () => {
         ))}
         </div>      
     </div>
-    </Background>
+</div>
     
     
   );

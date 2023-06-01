@@ -4,7 +4,7 @@ import './MedicalStaffDashboard.css';
 import Background from '../components/Background';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import LogoutAction from '../components/LogoutAction';
+
 
 const searchPatientById = async (patientId, setSearchResults) => {
   try {
@@ -77,18 +77,9 @@ useEffect(() => {
             />
           </div>
         </div>
-        {/* Display search results here */}
-        <div>
-          {searchResults.map((patient) => (
-            <div key={patient.id}>
-              {/* Display patient details */}
-              <p>{patient.id} {patient.FirstName}</p>
-            </div>
-          ))}
         </div>
-      </div>
-    </Background>
-  );
-};
+      </Background>
+    );
+  };
 
 export default MedicalStaffDashboard;
