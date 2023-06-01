@@ -66,7 +66,6 @@ useEffect(() => {
         <button className="logout-button" onClick={handleLogout}>התנתק</button>
         <h2 className="hello-doctor">שלום {userName}</h2>
         <div className='container-SearchBox'>
-          <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
           <div>
             <input
               className="searchBar"
@@ -75,6 +74,7 @@ useEffect(() => {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="חיפוש מטופל לפי תעודת זהות"
             />
+            <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
           </div>
         </div>
         {/* Display search results here */}
