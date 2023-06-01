@@ -10,6 +10,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ParentDashboard from './pages/ParentDashboard';
 import MedicalStaffDashboard from './pages/MedicalStaffDashboard';
 import AfterReg from './pages/AfterReg';
+import WaitForAdmin from './pages/WaitForAdmin'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -75,6 +76,9 @@ useEffect(() => {
 }
 
 function DashboardSelector({ currentUser }) {
+  if(currentUser?.role===''){
+    <WaitForAdmin />
+  }
   switch (currentUser?.role) {
     case 'admin':
       return <AdminDashboard />;
