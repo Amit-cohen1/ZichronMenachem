@@ -9,7 +9,7 @@ body {
   }
   
   .container1 {
-    width: 500px; /* Adjust the width to your desired size */
+    width: 50%; /* Adjust the width to your desired size */
     margin: 0 auto;
     margin-top: 15vh; /* Adjust the margin-top to position the container vertically */
     padding: 20px;
@@ -18,7 +18,9 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-family: 'Open Sans', sans-serif;
   }
-  
+  .headline{
+    margin-top: auto;
+  }
   
   /* Form styles */
   form {
@@ -38,6 +40,14 @@ body {
     border: 1px solid #ccc;
     border-radius: 4px;
     height: 40px;
+  }
+  .inputLogin{
+    margin: 5px;
+    margin-bottom: 10px;
+  }
+  .submitLogin{
+    margin: 5px;
+    margin-bottom: 10px;
   }
   
   button {
@@ -101,6 +111,7 @@ body {
   .searchBar1{
     font-family: 'Open Sans', sans-serif;
     font-family: 'Open Sans', sans-serif;
+    width: 40%;
     margin: 20px;
     margin-right: 35%;
     padding: 10px;

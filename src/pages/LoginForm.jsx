@@ -17,6 +17,7 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  
 
   const login = async (e) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ function LoginForm() {
   
 
       if (user.emailVerified) {
+        if(user)
         console.log("flag");
         navigate('/');
       } else {
@@ -126,15 +128,18 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type='submit'>התחבר</button>
+          <button className='submitLogin' type='submit'>התחבר</button>
         </form>
         <p>
+          <br></br>
           אין לך חשבון? <Link to='/register'>צור חשבון כאן</Link>
         </p>
         <p>
         <button className='GoogleBtn' onClick={handleGoogleLogin}> התחבר עם גוגל  
     <img className='imageLogo' src={GoogleLogo} alt='GoogleLogo' /></button>
         </p>
+        <p className='error-message'> נא לא להתחבר עם גוגל לפני הרשמה</p>
+
       </div>
     </Background>
   );
