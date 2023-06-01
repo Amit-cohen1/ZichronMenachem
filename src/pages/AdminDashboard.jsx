@@ -11,6 +11,7 @@ import Background from '../components/Background';
 import userCard from '../components/UserEmailContainer'
 import Dropdown from 'react-bootstrap/Dropdown';
 import UserEmailContainer from '../components/UserEmailContainer';
+import './AdminDashboard.css';
 const AdminDashboard = () => {
 
   // Content and functionality for the admin dashboard
@@ -81,20 +82,21 @@ const AdminDashboard = () => {
     <Background>
     
     <button className="logout-button" onClick={handleLogout}>התנתק</button>
-    <div className='container2'>
-      <h2>ברוך הבא {userName}</h2>
+        <h2 className="hello-doctor">שלום {userName}</h2>
       {/* Admin-specific content */}
-      <div className='adminContainer'>
-        <input className='searchBar1' type="text" placeholder="הכנס מייל" value={searchTerm} onChange={handleSearchChange} />
-        <button className='AdminBtn' type="button"  value= {searchTerm} onClick={handleSearchSubmit}>חפש</button>
+      <div className="containerMain">
+      <div className="containerSearchBox">
+        <input className='searchBarAdmin' type="text" placeholder="הכנס כתובת אימייל" value={searchTerm} onChange={handleSearchChange} />
+        <button className='AdminBtn1' type="button"  value= {searchTerm} onClick={handleSearchSubmit}>חפש</button>
           {showUserEmail && <UserEmailContainer userEmail={userEmail} />}
       </div>
 
       <br/><p/>
       
-        <h3> רשימת משתמשים חדשים</h3>
+        <h3 className="Headline"> רשימת משתמשים חדשים</h3>
         <div id = "1">
-            <button className='AdminBtn' type="button" onClick={handelAlot}>נא לחץ כאן על מנת להציג</button>
+          <p> <button className='AdminBtn1' type="button" onClick={handelAlot}>נא לחץ כאן על מנת להציג</button></p>
+           
             {userEmails.map((email, index) => (
           <UserEmailContainer key={index} userEmail={email} />
         ))}

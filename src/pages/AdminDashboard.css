@@ -1,0 +1,79 @@
+body, html {
+    font-family: 'Open Sans', sans-serif;
+     margin: 0;
+     padding: 0;
+     height: 100%;
+   }
+
+   .logout-button {
+    text-align: center;
+    /* padding: "1rem 1rem"; */
+    padding-bottom: 2.2rem;
+    position: relative;
+    top: 10px;
+    right: 10px;
+    height: 40px;
+    background-color:#000000;
+    border-radius: 30px;
+  }
+  
+  .hello-user {
+    margin-top: 70px;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    color: black;
+  }
+.containerMain {
+    font-family: 'Open Sans', sans-serif;
+    width: 80%; /* Adjust the width to your desired size */
+    margin: 0 auto;
+}
+    
+
+.containerSearchBox{
+    font-family: 'Open Sans', sans-serif;
+    margin: 15px;
+
+   }
+    
+  .searchBarAdmin{
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    font-size: large;
+    width: 45%;
+    margin-right: 22%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    height: 40px;
+    text-align: center;
+    font-size: large;
+    margin-bottom: 5%;
+  }
+  .AdminBtn1{
+    font-family: 'Open Sans', sans-serif;
+    width: 17%;
+    font-size: 16px;
+    background-color: #A4D65E;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-style: italic;
+    margin-top: 50px;
+    margin-right: 30px;
+    margin-left: 20px;
+    border-radius: 25px;
+    color: black;
+  }
+  
+  .Headline{
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    color: black;
+}
+    
