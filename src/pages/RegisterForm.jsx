@@ -56,7 +56,6 @@ function RegisterForm() {
         {error && <div className='auth__error'>{error}</div>}
         <form onSubmit={register} name='register_form'>
           <input
-           className='inputLogin'
             type='text'
             value={displayName}
             required
@@ -65,7 +64,6 @@ function RegisterForm() {
           />
 
           <input
-          className='inputLogin'
             type='email'
             value={email}
             required
@@ -74,7 +72,6 @@ function RegisterForm() {
           />
 
           <input
-          className='inputLogin'
             type='password'
             value={password}
             required

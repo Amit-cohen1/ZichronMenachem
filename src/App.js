@@ -14,7 +14,7 @@ import WaitForAdmin from './pages/WaitForAdmin'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({ role: null });
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
  

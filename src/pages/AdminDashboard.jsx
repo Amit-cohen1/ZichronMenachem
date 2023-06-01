@@ -11,23 +11,16 @@ const AdminDashboard = () => {
   const [showUserEmail, setShowUserEmail] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [userName, setUserName] = useState(''); // Initialize with a default username
-
-  // Fetch the username from Firebase auth when the component mounts
-  useEffect(() => {
-      const user = auth.currentUser;
-      if (user) {
-        setUserName(user.displayName);
-      }
-  }, []);
-
   const db = getFirestore();
+
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);    
+    setSearchTerm(event.target.value);
+    console.log("the val is:", event.target.value)
+    
   };
   const handleSearchSubmit = async (e) => {
     const q = query(
-      collection(db,"users"),
+      collection(db,"Users"),
       where("email", "==", e.target.value)
     );
     const qs = await getDocs(q);
@@ -71,11 +64,8 @@ const AdminDashboard = () => {
 
 
   return (
-    <Background>
-    
-    <button className="logout-button" onClick={handleLogout}>התנתק</button>
-    <div className='container2'>
-      <h2>ברוך הבא {userName}</h2>
+    <div className='container'>
+      <h2>Welcome, Admin!</h2>
       {/* Admin-specific content */}
       <div className='adminContainer'>
         <input className='searchBar1' type="text" placeholder="הכנס מייל" value={searchTerm} onChange={handleSearchChange} />
@@ -84,8 +74,8 @@ const AdminDashboard = () => {
       </div>
 
       <br/><p/>
-      
-        <h3> רשימת משתמשים חדשים</h3>
+      <div className='container'>
+        <h2> List of new users</h2>
         <div id = "1">
             <button className='AdminBtn' type="button" onClick={handelAlot}>נא לחץ כאן על מנת להציג</button>
             {userEmails.map((email, index) => (
@@ -93,7 +83,7 @@ const AdminDashboard = () => {
         ))}
         </div>      
     </div>
-    </Background>
+</div>
     
     
   );

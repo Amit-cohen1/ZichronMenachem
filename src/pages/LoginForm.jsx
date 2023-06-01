@@ -8,8 +8,8 @@ import { collection, addDoc } from 'firebase/firestore';
 import Background from '../components/Background';
 import GoogleLogo from '../pages/GoogleLogo.png';
 import "../components/GoogleLogin.css"
-// import Container from 'react-bootstrap/Container';
-
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 
 
 function LoginForm() {
@@ -59,7 +59,6 @@ function LoginForm() {
         const user = result.user;
   
         if (result.additionalUserInfo.isNewUser) {
-          console.log("new user login");
           const usersCollectionRef = collection(firestore, 'users');
           addDoc(usersCollectionRef, {
             displayName: user.displayName,
@@ -101,17 +100,18 @@ function LoginForm() {
       });
   };
   
+  
+  
 
   return (
     <Background>
-   
-   
+     <Container>
+    <div className='center'>
       <div className='container1'>
         <h1>התחבר</h1>
         {error && <div className='auth__error'>{error}</div>}
         <form onSubmit={login} name='login_form'>
           <input
-            className='inputLogin'
             type='email'
             value={email}
             required
@@ -120,7 +120,6 @@ function LoginForm() {
           />
 
           <input
-            className='inputLogin'
             type='password'
             value={password}
             required
@@ -128,19 +127,18 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button className='submitLogin' type='submit'>התחבר</button>
+          <button type='submit'>התחבר</button>
         </form>
         <p>
-          <br></br>
           אין לך חשבון? <Link to='/register'>צור חשבון כאן</Link>
         </p>
         <p>
         <button className='GoogleBtn' onClick={handleGoogleLogin}> התחבר עם גוגל  
     <img className='imageLogo' src={GoogleLogo} alt='GoogleLogo' /></button>
         </p>
-        <p className='error-message'> נא לא להתחבר עם גוגל לפני הרשמה</p>
-
       </div>
+    </div>
+    </Container>
     </Background>
   );
 }
