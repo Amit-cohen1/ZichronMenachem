@@ -17,6 +17,7 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  
 
   const login = async (e) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ function LoginForm() {
   
 
       if (user.emailVerified) {
+        if(user)
         console.log("flag");
         navigate('/');
       } else {

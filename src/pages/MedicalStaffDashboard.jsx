@@ -53,35 +53,35 @@ const MedicalStaffDashboard = () => {
     searchPatientById(searchQuery, setSearchResults);
   };
 
-  return (
-    <Background>
-      <div>
-        <button className="logout-button" onClick={handleLogout}>התנתק</button>
-        <h2 className="hello-doctor">שלום ישראל ישראלי</h2>
-        <div className='container-SearchBox'>
-          <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
+    return (
+      <Background>
+        <div>
+          <button className="logout-button" onClick={handleLogout}>התנתק</button>
+          <h2 className="hello-doctor">שלום {userName}</h2>
+          <div className='container-SearchBox'>
+            <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
+            <div>
+              <input
+                className="searchBar"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="חיפוש מטופל לפי תעודת זהות"
+              />
+            </div>
+          </div>
+          {/* Display search results here */}
           <div>
-            <input
-              className="searchBar"
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="חיפוש מטופל לפי תעודת זהות"
-            />
+            {searchResults.map((patient) => (
+              <div key={patient.id}>
+                {/* Display patient details */}
+                <p>{patient.id} {patient.FirstName}</p>
+              </div>
+            ))}
           </div>
         </div>
-        {/* Display search results here */}
-        <div>
-          {searchResults.map((patient) => (
-            <div key={patient.id}>
-              {/* Display patient details */}
-              <p>{patient.id} {patient.FirstName}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </Background>
-  );
-};
+      </Background>
+    );
+  };
 
 export default MedicalStaffDashboard;
