@@ -92,6 +92,16 @@ body {
   margin: 15px;
   background-color: rgba(77, 80, 81, 0.315);
  }
+ .container-message{
+  width: 50%; /* Adjust the width to your desired size */
+  margin: 0 auto;
+  margin-top: 15vh; /* Adjust the margin-top to position the container vertically */
+  padding: 20px;
+  background-color: #A4D65E;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Open Sans', sans-serif;
+ }
   
   
   .searchBar1{

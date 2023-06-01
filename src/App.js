@@ -76,9 +76,6 @@ useEffect(() => {
 }
 
 function DashboardSelector({ currentUser }) {
-  if(currentUser?.role===''){
-    <WaitForAdmin />
-  }
   switch (currentUser?.role) {
     case 'admin':
       return <AdminDashboard />;
@@ -87,7 +84,7 @@ function DashboardSelector({ currentUser }) {
     case 'medicalStaff':
       return <MedicalStaffDashboard />;
     default:
-      return <AfterReg />;
+      return <WaitForAdmin />;  
   }
 }
 

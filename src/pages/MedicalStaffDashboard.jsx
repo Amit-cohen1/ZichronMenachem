@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth, firestore } from '../firebase';
 import './MedicalStaffDashboard.css';
 import Background from '../components/Background';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { Navigate } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import LogoutAction from '../components/LogoutAction';
 
 const searchPatientById = async (patientId, setSearchResults) => {
   try {
@@ -29,30 +29,38 @@ const searchPatientById = async (patientId, setSearchResults) => {
   }
 };
 
+const handleLogout = () => {
+  auth.signOut()
+    .then(() => {
+      console.log('User logged out successfully');
+      // Perform any additional cleanup or redirection logic here
+    })
+    .catch((error) => {
+      console.error('Error logging out:', error);
+    });
+};
+
 
 const MedicalStaffDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [userName, setUserName] = useState(''); // Initialize with a default username
 
-  const handleLogout = () => {
-    auth.signOut()
-    .then(() => {
-        // Logout successful, redirect or handle accordingly
-        console.log('User logged out successfully');
-        Navigate('/login'); 
-        // Redirect to login page or perform other actions
-      })
-      .catch((error) => {
-        // An error occurred while logging out
-        console.error('Error logging out:', error);
-        // Handle the error, display a message, etc.
-      });
-  };
+// Fetch the username from Firebase auth when the component mounts
+useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      setUserName(user.displayName);
+    }
+}, []);
+
+
   const handleSearch = () => {
     // Trigger searchPatientById with the searchQuery and setSearchResults
     searchPatientById(searchQuery, setSearchResults);
   };
 
+<<<<<<< HEAD
     return (
       <Background>
         <div>
@@ -78,6 +86,23 @@ const MedicalStaffDashboard = () => {
                 <p>{patient.id} {patient.FirstName}</p>
               </div>
             ))}
+=======
+  return (
+    <Background>
+      <div>
+        <button className="logout-button" onClick={handleLogout}>התנתק</button>
+        <h2 className="hello-doctor">שלום {userName}</h2>
+        <div className='container-SearchBox'>
+          <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
+          <div>
+            <input
+              className="searchBar"
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="חיפוש מטופל לפי תעודת זהות"
+            />
+>>>>>>> master
           </div>
         </div>
       </Background>
