@@ -12,6 +12,7 @@ const AdminDashboard = () => {
   const [userEmail, setUserEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const db = getFirestore();
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
     console.log("the val is:", event.target.value)
@@ -82,7 +83,7 @@ const AdminDashboard = () => {
         ))}
         </div>      
     </div>
-
+</div>
     
     
   );
