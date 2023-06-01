@@ -8,14 +8,16 @@ import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import {auth} from '../firebase';
 import Background from '../components/Background';
+import '../pages/ParentDashboard.css'
 
 // component of the profile fields- gets the label (such as first name), its name
  const ProfileField = ({ label, name, profileData, handleInputChange, isEditing }) => {
 
     return (
-      <label>
+      <label className='label-parent'>
         {label}:
         <input
+          className='input-parent'
           type="text"
           //key={name}
           name={name}
@@ -29,7 +31,7 @@ import Background from '../components/Background';
 
   const TextAreaField = ({ label, name, profileData,handleInputChange, isEditing }) => {
     return (
-      <label>
+      <label className='label-parent'>
         {label}:
         <textarea
           name={name}
@@ -161,13 +163,13 @@ const ParentDashboard = () => {
 
   return (
     <Background>
-    <div>
+    <div className='container-Parent'>
       <button className="logout-button" onClick={handleLogout}>התנתק</button> 
       <h2>Welcome, Parent!</h2>
       {/* Parent-specific content */}
       <div>
-        <h4>פרופיל ילד</h4>
-        <form>
+        <h4 className='h4-parent'>פרופיל ילד</h4>
+        <form className='parent-form'>
           <ProfileField label="First Name" name="firstName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} />
           <ProfileField label="Last Name" name="lastName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} />
           <ProfileField label="ID" name="id" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
