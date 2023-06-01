@@ -8,9 +8,15 @@ import './Forms.css'; // Import the CSS file
 import { collection, query, where, getDocs, getFirestore, setDoc, doc } from "firebase/firestore";
 import { Await } from 'react-router-dom/dist';
 import Background from '../components/Background';
+import userCard from '../components/UserEmailContainer'
+import Dropdown from 'react-bootstrap/Dropdown';
+import UserEmailContainer from '../components/UserEmailContainer';
 const AdminDashboard = () => {
 
   // Content and functionality for the admin dashboard
+  const [userEmails, setUserEmails] = useState([]);
+  const [showUserEmail, setShowUserEmail] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [userName, setUserName] = useState(''); // Initialize with a default username
 
@@ -26,7 +32,6 @@ const AdminDashboard = () => {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);    
   };
-
   const handleSearchSubmit = async (e) => {
     const q = query(
       collection(db,"users"),
@@ -37,10 +42,28 @@ const AdminDashboard = () => {
        if (doc.exists){
           console.log("success with finding user");
           console.log(doc.data());
-
+          setShowUserEmail(true);
+          setUserEmail(doc.data().email);
        }
        
     });
+  };
+  const handelAlot = async () => {
+    const emails = [];
+    const q = query(
+      collection(db,"users"),
+      where("role", "==","")
+    );
+    const qs = await getDocs(q);
+    qs.forEach((doc) => {
+       if (doc.exists){
+          console.log("success with finding user");
+          console.log(doc.data());
+          emails.push(doc.data().email);
+        }
+       
+    });
+    setUserEmails(emails);
   };
   const handleLogout = () => {
     auth.signOut()
@@ -62,18 +85,20 @@ const AdminDashboard = () => {
       <h2>ברוך הבא {userName}</h2>
       {/* Admin-specific content */}
       <div className='adminContainer'>
-      <input className='searchBar1' type="text" placeholder="הכנס מייל" value={searchTerm} onChange={handleSearchChange} />
-      <button className='AdminBtn' type="button"  value= {searchTerm} onClick={handleSearchSubmit}>חפש</button>
+        <input className='searchBar1' type="text" placeholder="הכנס מייל" value={searchTerm} onChange={handleSearchChange} />
+        <button className='AdminBtn' type="button"  value= {searchTerm} onClick={handleSearchSubmit}>חפש</button>
+          {showUserEmail && <UserEmailContainer userEmail={userEmail} />}
       </div>
 
       <br/><p/>
       
         <h3> רשימת משתמשים חדשים</h3>
         <div id = "1">
-
-        </div>
-
-      
+            <button className='AdminBtn' type="button" onClick={handelAlot}>נא לחץ כאן על מנת להציג</button>
+            {userEmails.map((email, index) => (
+          <UserEmailContainer key={index} userEmail={email} />
+        ))}
+        </div>      
     </div>
     </Background>
     
