@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import firebase from '../firebase';
-import firestore from '../firebase';
 import { auth } from '../firebase';
-import { BrowserRouter as Router, Route, Switch, Redirect, useNavigate } from 'react-router-dom';
-import RegisterForm from './RegisterForm';
 import './Forms.css'; // Import the CSS file
 import { collection, query, where, getDocs, getFirestore, setDoc, doc } from "firebase/firestore";
-import { Await } from 'react-router-dom/dist';
 import Background from '../components/Background';
-import userCard from '../components/UserEmailContainer'
-import Dropdown from 'react-bootstrap/Dropdown';
 import UserEmailContainer from '../components/UserEmailContainer';
 const AdminDashboard = () => {
 
