@@ -30,7 +30,7 @@ const CampRegistration = () => {
 
   
     return (
-    <Background>
+    /*<Background>*/
         <div>
             <h2> Camp Registration Page</h2>
             <FormDataContext.Provider value={{ formData }}> {/* provides the form data context to the components */}   
@@ -39,7 +39,7 @@ const CampRegistration = () => {
                 {step === 3 && <ConsentPage onBack={handleBack} onSubmit={handleNext} />}
             </FormDataContext.Provider>
         </div>
-    </Background>
+    /*</Background>*/
     );
 };
 
@@ -165,8 +165,6 @@ const MedicalDetails = ({ onBack, onNext }) => {
             { label: 'טלפון', name: 'doctorPhoneNumber' },
             { label: 'קופת חולים', name: 'hmo' },
         ],
-      /*{ label: 'אבחנה:', name: 'diagnosis' },
-      { label: ':בתאריך', name: 'diagnosisDate' },*/
         [
             { label: 'אבחנה', name: 'diagnosis', hasDate: true, dateLabel:'בתאריך' },
             { label: 'מיקום הגידול', name: 'locationOfTumor' },
