@@ -11,7 +11,11 @@ import ParentDashboard from './pages/ParentDashboard';
 import MedicalStaffDashboard from './pages/MedicalStaffDashboard';
 import AfterReg from './pages/AfterReg';
 import WaitForAdmin from './pages/WaitForAdmin'
+import LoadingIndicator from './components/LoadingIndicator';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MedicalHistory from './pages/MedicalHistory';
+import CampRegistration from './pages/CampRegistration';
+import UploadDocuments from './pages/UploadDocuments';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -61,7 +65,7 @@ useEffect(() => {
       <Routes>
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
-        <Route path="/AfterReg" element={<AfterReg />} />
+        <Route path="/AfterReg" element={loading ? <LoadingIndicator /> : <AfterReg />} /> 
         <Route
           path="/"
           element={currentUser ? (
@@ -70,6 +74,9 @@ useEffect(() => {
             <LoginForm />
           )}
         />
+        <Route path="/medical-history" element={<MedicalHistory />} />
+        <Route path="/camp-registration" element={<CampRegistration />} />
+        <Route path="/upload-documents" element={<UploadDocuments />} />
       </Routes>
     </Router>
   );
@@ -84,8 +91,9 @@ function DashboardSelector({ currentUser }) {
     case 'medicalStaff':
       return <MedicalStaffDashboard />;
     default:
-      return <WaitForAdmin />;  
+      return currentUser ? null : <WaitForAdmin />;
   }
 }
+
 
 export default App;
