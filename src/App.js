@@ -13,6 +13,9 @@ import AfterReg from './pages/AfterReg';
 import WaitForAdmin from './pages/WaitForAdmin'
 import LoadingIndicator from './components/LoadingIndicator';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MedicalHistory from './pages/MedicalHistory';
+import CampRegistration from './pages/CampRegistration';
+import UploadDocuments from './pages/UploadDocuments';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -71,6 +74,9 @@ useEffect(() => {
             <LoginForm />
           )}
         />
+        <Route path="/medical-history" element={<MedicalHistory />} />
+        <Route path="/camp-registration" element={<CampRegistration />} />
+        <Route path="/upload-documents" element={<UploadDocuments />} />
       </Routes>
     </Router>
   );
