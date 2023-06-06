@@ -54,8 +54,8 @@ function RegisterForm() {
       <div className='container1'>
         <h1>הירשם</h1>
         {error && <div className='auth__error'>{error}</div>}
-        <form onSubmit={register} name='register_form'>
-          <input
+        <form className='formRegister' onSubmit={register} name='register_form'>
+          <input className='input-register'
             type='text'
             value={displayName}
             required
@@ -63,7 +63,7 @@ function RegisterForm() {
             onChange={(e) => setDisplayName(e.target.value)}
           />
 
-          <input
+          <input className='input-register'
             type='email'
             value={email}
             required
@@ -72,6 +72,7 @@ function RegisterForm() {
           />
 
           <input
+            className='input-register'
             type='password'
             value={password}
             required
@@ -79,7 +80,7 @@ function RegisterForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type='submit'>הירשם</button>
+          <button className='button-register' type='submit'>הירשם</button>
         </form>
         <p>
           כבר נרשמת בעבר? <Link to='/login'>התחבר כאן</Link>
