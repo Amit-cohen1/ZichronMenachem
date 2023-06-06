@@ -1,31 +1,34 @@
-/*import React from 'react'; */
-/*import React, { useState, useEffect } from 'react';*/
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, Router, Routes, Route, useNavigate } from 'react-router-dom';
 //import { ref, onValue, off, set } from 'firebase/database';
 //import { database } from '../firebase';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, addDoc, updateDoc, collection, query, where, getDocs, getDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import {auth} from '../firebase';
+//import { useAuth } from '../contexts/AuthContext'
+/*import MedicalHistory from './MedicalHistory';
+import CampRegistration from './CampRegistration';
+import UploadDocuments from './UploadDocuments';*/
 import Background from '../components/Background';
-import '../pages/ParentDashboard.css'
+//import '../pages/ParentDashboard.css'
 
 // component of the profile fields- gets the label (such as first name), its name
  const ProfileField = ({ label, name, profileData, handleInputChange, isEditing }) => {
 
     return (
-      <label className='label-parent'>
+      <div className= "field-wrapper">
+      {/*<label className='label-parent'>*/}
         {label}:
         <input
           className='input-parent'
           type="text"
-          //key={name}
           name={name}
           value={profileData[name]}
           onChange={(e) => handleInputChange(e, name)}
           disabled={!isEditing}
         />
-      </label>
+      {/*</label>*/}
+      </div>
     );
   };
 
@@ -35,7 +38,6 @@ import '../pages/ParentDashboard.css'
         {label}:
         <textarea
           name={name}
-          //key={name}
           value={profileData[name]}
           onChange={handleInputChange}
           disabled={!isEditing}
@@ -45,8 +47,31 @@ import '../pages/ParentDashboard.css'
   };
 
 
+  // component for the options below the patient details. takes to other pages.
+ /*const Square = ({ title, path }) => {
+  const navigate = useNavigate();
+  
+  const handleClick = () => {
+    navigate(path);
+  };
+
+  return (
+  <div className="options">
+    <h5>{title}</h5>
+      <button onClick={handleClick}>Click here</button>
+  </div>
+  );
+ };*/
+
+     /*</a>*/
+    /*<Link to={to}>
+      <button>Click here</button>
+ </Link>*/
+
 
 const ParentDashboard = () => {
+  // Content and functionality for the parent dashboard
+
   const handleLogout = () => {
     auth.signOut()
       .then(() => {
@@ -57,7 +82,6 @@ const ParentDashboard = () => {
         console.error('Error logging out:', error);
       });
   };
-  // Content and functionality for the parent dashboard
 
   //State for profile data and editing mode
   const[profileData, setProfileData] = useState({
@@ -96,26 +120,47 @@ const ParentDashboard = () => {
 
   const [isEditing, setIsEditing] = useState(false);
 
+
   // fetch patient data on component mount
   useEffect(() => {
-    const fetchPatientData = () => {
+    /*const fetchPatientData = () => {
       const patientDoc = doc(firestore, 'Childrens', 'pUitCjO9ClIFIRDVrA8G');
       onSnapshot(patientDoc, (docSnapshot) => {
         if (docSnapshot.exists()) {
           setProfileData(docSnapshot.data());
         }
       });
+    };*/
+    const fetchPatientData = async () => {
+      try {
+        const userQuery = query(collection(firestore, 'users'), where('email', '==', auth.currentUser.email));
+        const userSnapshot = await getDocs(userQuery);
+        if (!userSnapshot.empty) {
+          const userDoc = userSnapshot.docs[0];
+          const userData = userDoc.data();
+          const childId= userData.childId;
+          // TEST
+          console.log('User data:', userData);
+          if (childId) {
+            const childQuery = query(collection(firestore, 'Childrens'), where('id', '==', childId));
+            onSnapshot(childQuery, (querySnapshot) => {
+              querySnapshot.forEach((docSnapshot => {
+                if (docSnapshot.exists()) {
+                  setProfileData(docSnapshot.data());
+                }
+              })
+              )
+            });
+          } 
+        }
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
     };
 
-    fetchPatientData();
-
-    return () => {
-      // clean up the snapshot listener
-      const patientDoc = doc(firestore, 'Childrens', 'pUitCjO9ClIFIRDVrA8G');
-      // unsubscribe the listener
-      const unsubscribe = onSnapshot(patientDoc, () => {});
-      unsubscribe();
-    };
+    if (auth.currentUser) {
+      fetchPatientData();
+    }   
   }, []);
 
 
@@ -128,9 +173,27 @@ const ParentDashboard = () => {
   // Handle click event for Save button
   const handleSaveClick = async () => {
     try {
-      const patientDoc = doc(firestore, 'Childrens', 'pUitCjO9ClIFIRDVrA8G');
-      await setDoc(patientDoc, profileData);
-      setIsEditing(false);
+      const userQuery = query(collection(firestore, 'users'), where('email', '==', auth.currentUser.email));
+      const userSnapshot = await getDocs(userQuery);
+      if(!userSnapshot.empty) {
+        const userDoc = userSnapshot.docs[0];
+        const userData = userDoc.data();
+        if (userData.childId) {
+          const childQuery = query(collection(firestore, 'Childrens'), where('id', '==', userData.childId));
+          const querySnapshot = await getDocs(childQuery);
+          const childDocRef = querySnapshot.docs[0].ref;
+          await updateDoc(childDocRef, profileData);
+        } else {
+          const newChildDocRef = await addDoc(collection(firestore, 'Childrens'), profileData);
+          const childSnapshot = await getDoc(newChildDocRef);
+          console.log('child reference:', newChildDocRef);
+          console.log('childData:', childSnapshot);
+          const idForUpdate= profileData.id;
+          await updateDoc(userDoc.ref, { childId: idForUpdate });
+          console.log('profile data:', profileData);
+        }
+        setIsEditing(false);
+      }
     } catch (error) {
       console.error('Error saving data:', error);
     }
@@ -149,20 +212,19 @@ const ParentDashboard = () => {
       }));
     };
 
-
-
-// component for the options below the patient details. takes to other pages.
- const Square = ({ text, to }) => (
-  <div>
-    <h5>{text}</h5>
-    <Link to={to}>
-      <button>Click here</button>
-    </Link>
-  </div>
-  );
+  // function for the options below the patient details. takes to other pages.
+  const Square = ({ title, path }) => (
+      <div>
+        <h5>{title}</h5>
+        <Link to={path}>
+          <button>Click here</button>
+        </Link>
+      </div>
+    );
+    
 
   return (
-    <Background>
+    /*<Background>*/
     <div className='container-Parent'>
       <button className="logout-button" onClick={handleLogout}>התנתק</button> 
       <h2>Welcome, Parent!</h2>
@@ -199,7 +261,6 @@ const ParentDashboard = () => {
           <ProfileField label="Mother's Work Phone Number" name="momWorkPhone" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
           <ProfileField label="Father's Work Phone Number" name="dadWorkPhone" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
           <ProfileField label="Allergies" name="allergies" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-
         </form>
       </div>
 
@@ -219,15 +280,14 @@ const ParentDashboard = () => {
       </div>
 
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>   
-          <Square text="Medical History" to="/medical-history" />
-          <Square text="Camp Registration Form" to="/camp-registration" />
-          <Square text="Uploading Documents" to="/upload-documents" />
-        </div>
+        <div className="squares-container" style={{ display: 'flex', justifyContent: 'space-between' }}>   
+          <Square title="Medical History" path="/medical-history" />
+          <Square title="Camp Registration Form" path="/camp-registration" />
+          <Square title="Uploading Documents" path="/upload-documents" />
+        </div>       
       </div>
-
     </div>
-    </Background>
+   /* </Background>*/
   );
 };
 
