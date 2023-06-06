@@ -11,6 +11,7 @@ import ParentDashboard from './pages/ParentDashboard';
 import MedicalStaffDashboard from './pages/MedicalStaffDashboard';
 import AfterReg from './pages/AfterReg';
 import WaitForAdmin from './pages/WaitForAdmin'
+import LoadingIndicator from './components/LoadingIndicator';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -61,7 +62,7 @@ useEffect(() => {
       <Routes>
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
-        <Route path="/AfterReg" element={<AfterReg />} />
+        <Route path="/AfterReg" element={loading ? <LoadingIndicator /> : <AfterReg />} /> 
         <Route
           path="/"
           element={currentUser ? (
@@ -84,8 +85,9 @@ function DashboardSelector({ currentUser }) {
     case 'medicalStaff':
       return <MedicalStaffDashboard />;
     default:
-      return <WaitForAdmin />;  
+      return currentUser ? null : <WaitForAdmin />;
   }
 }
+
 
 export default App;
