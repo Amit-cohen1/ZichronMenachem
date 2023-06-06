@@ -99,25 +99,4 @@ function DashboardSelector({ currentUser }) {
 
 
 export default App;
-/*import React from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ParentDashboard from './pages/ParentDashboard';
-import MedicalHistory from './pages/MedicalHistory';
-import CampRegistration from './pages/CampRegistration';
-import UploadDocuments from './pages/UploadDocuments';
 
-const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route exact path="/" element={<ParentDashboard />} />
-        <Route path="/medical-history" element={<MedicalHistory />} />
-        <Route path="/camp-registration" element={<CampRegistration />} />
-        <Route path="/upload-documents" element={<UploadDocuments />} />
-      </Routes>
-    </Router>
-  );
-};
-
-
-export default App;*/

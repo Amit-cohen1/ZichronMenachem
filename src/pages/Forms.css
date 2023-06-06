@@ -20,25 +20,25 @@ body {
   
   
   /* Form styles */
-  form {
+  .formLogin, .formRegister {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
   }
-  label{
+  .label-login{
     font-family: 'Open Sans', sans-serif;
     text-align: center;
   }
   
-  input {
+  .input-login, .input-register {
     font-family: 'Open Sans', sans-serif;
-    margin-bottom: 10px;
+    margin-bottom: 1vh;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
   
-  button {
+  .button-login, .button-register {
     font-family: 'Open Sans', sans-serif;
     padding: 10px;
     background-color: #007bff;
@@ -48,7 +48,7 @@ body {
     cursor: pointer;
   }
   
-  button:hover {
+  .button-login:hover {
     background-color: #0056b3;
   }
   

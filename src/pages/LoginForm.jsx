@@ -110,8 +110,8 @@ function LoginForm() {
       <div className='container1'>
         <h1>התחבר</h1>
         {error && <div className='auth__error'>{error}</div>}
-        <form onSubmit={login} name='login_form'>
-          <input
+        <form className='formLogin' onSubmit={login} name='login_form'>
+          <input className='input-login'
             type='email'
             value={email}
             required
@@ -119,7 +119,7 @@ function LoginForm() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <input
+          <input className='input-login'
             type='password'
             value={password}
             required
@@ -127,15 +127,15 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type='submit'>התחבר</button>
+          <button className='button-login' type='submit'>התחבר</button>
         </form>
         <p>
           אין לך חשבון? <Link to='/register'>צור חשבון כאן</Link>
         </p>
-        <p>
+        {/* <p>
         <button className='GoogleBtn' onClick={handleGoogleLogin}> התחבר עם גוגל  
     <img className='imageLogo' src={GoogleLogo} alt='GoogleLogo' /></button>
-        </p>
+        </p> */}
       </div>
     </div>
     </Container>
