@@ -5,26 +5,19 @@ import Background from '../components/Background';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
-
 const searchPatientById = async (patientId, setSearchResults) => {
   try {
-    const childRef = collection(firestore, 'Childrens'); // Use 'collection' method
-    const querySnapshot = await getDocs(query(childRef, where('id', '==', patientId))); // Use 'query' and 'getDocs' methods
+    const childRef = collection(firestore, 'Childrens');
+    const querySnapshot = await getDocs(query(childRef, where('id', '==', patientId)));
 
     if (!querySnapshot.empty) {
-      // Patient found, handle the logic here (e.g., display patient details page)
       const patientData = querySnapshot.docs[0].data();
-      console.log('Patient details:', patientData.id, 'Patient additional Data: '+ patientData.FirstName);
-      // Update searchResults state with the found patient
+      console.log('Patient details:', patientData.id, 'Patient additional Data: ' + patientData.FirstName);
       setSearchResults([patientData]);
     } else {
-      // Patient not found, handle the logic here (e.g., display an error message)
-      console.log('Patient not found');
-      // Clear searchResults state
       setSearchResults([]);
     }
   } catch (error) {
-    // Handle any errors that occur during the search
     console.error('Error searching for patient:', error);
   }
 };
@@ -33,30 +26,25 @@ const handleLogout = () => {
   auth.signOut()
     .then(() => {
       console.log('User logged out successfully');
-      // Perform any additional cleanup or redirection logic here
     })
     .catch((error) => {
       console.error('Error logging out:', error);
     });
 };
 
-
 const MedicalStaffDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [userName, setUserName] = useState(''); // Initialize with a default username
+  const [userName, setUserName] = useState('');
 
-// Fetch the username from Firebase auth when the component mounts
-useEffect(() => {
+  useEffect(() => {
     const user = auth.currentUser;
     if (user) {
       setUserName(user.displayName);
     }
-}, []);
-
+  }, []);
 
   const handleSearch = () => {
-    // Trigger searchPatientById with the searchQuery and setSearchResults
     searchPatientById(searchQuery, setSearchResults);
   };
 
@@ -77,9 +65,23 @@ useEffect(() => {
             <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
           </div>
         </div>
-        </div>
-      </Background>
-    );
-  };
+
+        {/* Display search results */}
+        {searchResults.length === 0 && <h3>Patient not found</h3>}
+        {searchResults.length > 0 && (
+          <div>
+            <h3>Patient Details:</h3>
+            {searchResults.map((patient) => (
+              <div key={patient.id}>
+                <p>{patient.id}</p>
+                {/* Display other patient details */}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </Background>
+  );
+};
 
 export default MedicalStaffDashboard;

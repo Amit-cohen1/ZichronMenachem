@@ -1,50 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { collection, query, where, getDocs, getFirestore, setDoc, doc, updateDoc } from "firebase/firestore";
-import './UserEmailContainer.css'; // Import the CSS file
+import React from 'react';
+import { collection, query, where, getDocs, getFirestore, updateDoc } from "firebase/firestore";
+import './UserEmailContainer.css';
 const db = getFirestore();
 
-const handleClick =  async (e) => {
-    var x=document.getElementById("myS").value;
-    console.log(x)
-    console.log(e.target.value)
+const UserEmailContainer = ({ userEmail }) => {
+  
+  const handleClick = async () => {
+    const selectedRole = document.getElementById("myS").value;
+    console.log(selectedRole);
+    console.log(userEmail);
+
     const q = query(
-        collection(db,"users"),
-        where("email", "==", e.target.value)
-      );
-      const qs = await getDocs(q);
-      qs.forEach(async (doc) => {
-        if (doc.exists){
-           await updateDoc(doc.ref,{
-            role:x
-           });
-        }
-        
-     });
-
-}
-
-const UserEmailContainer = ({userEmail}) => {
-    return(
-        <div id='1'>
-            <div className="wrapper"> 
-                <div className="firstline">נמצא המשתמש בעל האימייל</div>
-                {userEmail}
-                <div id="2">
-                    <div className="DropDown">
-                    <label>בחר תפקיד
-                     <select id="myS">
-                         <option value="admin" >Admin</option>
-                         <option value="medicalStaff">medicalStaff</option>
-                         <option value="parent">parent</option>
-                     </select>
-                     <button value={userEmail} onClick={handleClick}>החל</button>
-                    </label>
-                    
-                    </div>
-                </div>
-            </div>
-        </div>
+      collection(db, "Users"),
+      where("email", "==", userEmail)
     );
+    const qs = await getDocs(q);
+    qs.forEach(async (doc) => {
+      if (doc.exists) {
+        await updateDoc(doc.ref, {
+          role: selectedRole
+        });
+      }
+    });
+  };
+
+  return (
+    <div className="user-email-container">
+      <div className="user-email">{userEmail}</div>
+      <div className="role-dropdown">
+        <label className="dropdown-label">
+          בחר תפקיד:
+          <select id="myS" className="dropdown-select">
+            <option value="admin">Admin</option>
+            <option value="medicalStaff">Medical Staff</option>
+            <option value="parent">Parent</option>
+          </select>
+        </label>
+      </div>
+      <button onClick={handleClick} className="apply-button">
+          החל
+        </button>
+    </div>
+  );
 };
 
 export default UserEmailContainer;
