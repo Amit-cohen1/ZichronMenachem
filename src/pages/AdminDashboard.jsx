@@ -1,67 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../firebase';
-import './Forms.css'; // Import the CSS file
+import './Forms.css';
 import { collection, query, where, getDocs, getFirestore, setDoc, doc } from "firebase/firestore";
 import Background from '../components/Background';
 import UserEmailContainer from '../components/UserEmailContainer';
 import './AdminDashboard.css';
-const AdminDashboard = () => {
 
-  // Content and functionality for the admin dashboard
+const AdminDashboard = () => {
   const [userEmails, setUserEmails] = useState([]);
   const [showUserEmail, setShowUserEmail] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [handleAlotClicked, setHandleAlotClicked] = useState(false);
   const db = getFirestore();
-  const [userName, setUserName] = useState(''); // Initialize with a default username
+  const [userName, setUserName] = useState('');
 
-// Fetch the username from Firebase auth when the component mounts
-useEffect(() => {
+  useEffect(() => {
     const user = auth.currentUser;
     if (user) {
       setUserName(user.displayName);
     }
-}, []);
-
+  }, []);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
-    console.log("the val is:", event.target.value)
-    
   };
-  const handleSearchSubmit = async (e) => {
+
+  const handleSearchSubmit = async () => {
     const q = query(
-      collection(db,"Users"),
-      where("email", "==", e.target.value)
+      collection(db, "users"),
+      where("email", "==", searchTerm)
     );
     const qs = await getDocs(q);
+    const foundDocs = [];
     qs.forEach((doc) => {
-       if (doc.exists){
-          console.log("success with finding user");
-          console.log(doc.data());
-          setShowUserEmail(true);
-          setUserEmail(doc.data().email);
-       }
-       
+      if (doc.exists) {
+        console.log("success with finding user");
+        console.log(doc.data());
+        foundDocs.push(doc.data());
+      }
     });
+    if (foundDocs.length > 0) {
+      setShowUserEmail(true);
+      setUserEmail(foundDocs[0].email);
+    }
   };
-  const handelAlot = async () => {
+  
+  
+  const handleAlot = async () => {
     const emails = [];
     const q = query(
-      collection(db,"users"),
-      where("role", "==","")
+      collection(db, "users"),
+      where("role", "==", "")
     );
     const qs = await getDocs(q);
     qs.forEach((doc) => {
-       if (doc.exists){
-          console.log("success with finding user");
-          console.log(doc.data());
-          emails.push(doc.data().email);
-        }
-       
+      if (doc.exists) {
+        console.log("success with finding user");
+        console.log(doc.data());
+        emails.push(doc.data().email);
+      }
     });
     setUserEmails(emails);
+    setHandleAlotClicked(true);
   };
+
   const handleLogout = () => {
     auth.signOut()
       .then(() => {
@@ -73,33 +76,36 @@ useEffect(() => {
       });
   };
 
-
+  
   return (
     <Background>
-    <button className="logout-button" onClick={handleLogout}>התנתק</button>
-        <h2 className="hello-doctor">שלום {userName}</h2>
-      {/* Admin-specific content */}
+      <button className="logout-button" onClick={handleLogout}>התנתק</button>
+      <h2 className="hello">שלום {userName}</h2>
       <div className="containerMain">
-      <div className="containerSearchBox">
-        <input className='searchBarAdmin' type="text" placeholder="הכנס כתובת אימייל" value={searchTerm} onChange={handleSearchChange} />
-        <button className='AdminBtn1' type="button"  value= {searchTerm} onClick={handleSearchSubmit}>חפש</button>
+        <div className="containerSearchBox">
+          <input className='searchBarAdmin' type="text" placeholder="הכנס כתובת אימייל" value={searchTerm} onChange={handleSearchChange} />
+          <button className='AdminBtn1' type="button" value={searchTerm} onClick={handleSearchSubmit}>חפש</button>
           {showUserEmail && <UserEmailContainer userEmail={userEmail} />}
-      </div>
+        </div>
 
-      <br/><p/>
-      
-        <h3 className="Headline"> רשימת משתמשים חדשים</h3>
-        <div id = "1">
-          <p> <button className='AdminBtn1' type="button" onClick={handelAlot}>נא לחץ כאן על מנת להציג</button></p>
-           
-            {userEmails.map((email, index) => (
-          <UserEmailContainer key={index} userEmail={email} />
-        ))}
-        </div>      
-    </div>
-</Background>
-  
+        <p/>
+        <p className="displayBtn"> <button className='AdminBtn2' type="button" onClick={handleAlot}>הצג משתמשים חדשים</button></p>
+        <h3 className="Headline">רשימת משתמשים חדשים</h3>
+        <div id="userListContainer" className={`user-list-container ${handleAlotClicked ? 'show' : ''}`}>
+         
+          {handleAlotClicked && userEmails.length > 0 ? (
+            <div className="user-list">
+              {userEmails.map((email, index) => (
+                <UserEmailContainer key={index} userEmail={email} />
+              ))}
+            </div>
+          ) : (
+            handleAlotClicked && userEmails.length === 0 && <p>No users found</p>
+          )}
+        </div>
+      </div>
+    </Background>
   );
-  };
+};
 
 export default AdminDashboard;
