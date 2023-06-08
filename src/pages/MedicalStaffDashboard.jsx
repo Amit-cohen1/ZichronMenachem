@@ -54,7 +54,7 @@ const MedicalStaffDashboard = () => {
         <button className="logout-button" onClick={handleLogout}>התנתק</button>
         <h2 className="hello-doctor">שלום {userName}</h2>
         <div className='container-SearchBox'>
-          <div>
+          <div className="search-Bar">
             <input
               className="searchBar"
               type="text"
