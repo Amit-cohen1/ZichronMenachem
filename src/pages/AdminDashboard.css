@@ -10,12 +10,13 @@ body, html {
 }
 
 .hello {
-   font-family: 'Open Sans', sans-serif;
-   text-align: center;
-   margin: 2%;
-   font-size: 2.5vw;
-   font-weight: bold;
-   color: black;
+   color: #5a6266;
+  text-shadow: 2px 2px 4px rgba(4, 92, 92, 0.5);
+  font-family: 'Arial', sans-serif;
+  font-size: 2.5rem;
+  transform: skew(-10deg);
+  margin-right: 0.5vw;
+  direction: rtl;
 }
 
 .containerMain {
