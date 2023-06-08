@@ -1,67 +1,81 @@
-/* styles.css */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
+
 /* Global styles */
 body, html {
-   font-family: 'Open Sans', sans-serif;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-  
-  .container-SearchBox {
-    display: flex;
-    justify-content: center;
-    margin-top: 20%;
-    
-  }
-  
-  /* Medical staff dashboard styles */
-  .logout-button {
-    text-align: center;
-    /* padding: "1rem 1rem"; */
-    padding-bottom: 2.2rem;
-    position: relative;
-    top: 10px;
-    right: 10px;
-    height: 40px;
-    background-color:#000000;
-    border-radius: 30px;
-  }
-  
-  .hello-doctor {
-    margin-top: 70px;
-    text-align: center;
-    font-size: 36px;
-  }
-  
-  .searchBar {
-    width: 492px;
-    height: 37px;
-    margin-top: 50px;
-    text-align: center;
-    font-size: large;
-    margin-bottom: 20px;  
-    margin-left: 30px;
-    border: none;
-    border-radius: 10px;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
-  
-  .searchBarBtn {
-    width: 120px;
-    height: 40px;
-    font-size: 16px;
-    background-color: #A4D65E;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    font-style: italic;
-    margin-top: 50px;
-    margin-right: 30px;
-    margin-left: 20px;
-    border-radius: 10px;
-  }
-  
-  /* Add more styles as needed */
-  
-  
+.container-SearchBox {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top */
+}
+
+/* Medical staff dashboard styles */
+.logout-button {
+  text-align: center;
+  padding: 1rem;
+  padding-bottom: 2.2rem;
+  position: relative;
+  top: 10px;
+  right: 10px;
+  height: 4vh;
+  background-color: #000000;
+  border-radius: 30px;
+  color: #ffffff;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add 3D shadow effect */
+}
+
+.hello-doctor {
+  margin-top: 6vh;
+  text-align: center;
+  font-size: 2.5vw;
+}
+
+.searchBar {
+  width: 30vw;
+  height: 5vh;
+  margin-top: 6vh;
+  text-align: center;
+  font-size: 1vw;
+  margin-bottom: 3vh;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5vh;
+  outline: none;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add 3D shadow effect */
+}
+
+.search-Bar{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top */
+
+}
+
+.searchBarBtn {
+  width: 12vw;
+  height: 5vh;
+  font-size: 1vw;
+  background-color: #a4d65e;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  margin-top: 6vh;
+  margin-right: 3vw; /* Add spacing */
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add 3D shadow effect */
+  transition: background-color 0.3s ease; /* Add transition effect */
+  display: flex;
+  align-items: center; /* Center the button content vertically */
+  justify-content: center; /* Center the button content horizontally */
+}
+
+.searchBarBtn:hover {
+  background-color: #86b93d; /* Change color on hover */
+}
+
+/* Add more styles as needed */

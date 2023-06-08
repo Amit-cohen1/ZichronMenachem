@@ -11,7 +11,7 @@ const UserEmailContainer = ({ userEmail }) => {
     console.log(userEmail);
 
     const q = query(
-      collection(db, "Users"),
+      collection(db, "users"),
       where("email", "==", userEmail)
     );
     const qs = await getDocs(q);
