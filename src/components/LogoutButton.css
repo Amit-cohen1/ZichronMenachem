@@ -1,0 +1,29 @@
+.logout-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 0.5vh;
+    
+    
+  }
+  
+  .logout-button:hover {
+    background-color: #333333;
+  }
+  
+  @media screen and (max-width: 100%) {
+    .logout-button {
+      margin-right: 1rem;
+      margin-left: auto;
+    }
+  }
+  

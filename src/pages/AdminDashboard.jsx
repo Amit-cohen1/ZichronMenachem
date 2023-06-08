@@ -5,6 +5,7 @@ import { collection, query, where, getDocs, getFirestore, setDoc, doc } from "fi
 import Background from '../components/Background';
 import UserEmailContainer from '../components/UserEmailContainer';
 import './AdminDashboard.css';
+import LogoutButton from '../components/LogoutButton';
 
 const AdminDashboard = () => {
   const [userEmails, setUserEmails] = useState([]);
@@ -64,22 +65,12 @@ const AdminDashboard = () => {
     setUserEmails(emails);
     setHandleAlotClicked(true);
   };
-
-  const handleLogout = () => {
-    auth.signOut()
-      .then(() => {
-        console.log('User logged out successfully');
-        // Perform any additional cleanup or redirection logic here
-      })
-      .catch((error) => {
-        console.error('Error logging out:', error);
-      });
-  };
-
   
   return (
     <Background>
-      <button className="logout-button" onClick={handleLogout}>התנתק</button>
+      <div className="logout-container">
+          <LogoutButton />
+        </div>
       <h2 className="hello">שלום {userName}</h2>
       <div className="containerMain">
         <div className="containerSearchBox">
