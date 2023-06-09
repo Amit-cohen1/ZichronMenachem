@@ -9,7 +9,6 @@ import Background from '../components/Background';
 import GoogleLogo from '../pages/GoogleLogo.png';
 import "../components/GoogleLogin.css"
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 
 
 function LoginForm() {
@@ -99,8 +98,6 @@ function LoginForm() {
         // Handle the error or display an appropriate message
       });
   };
-  
-  
   
 
   return (
