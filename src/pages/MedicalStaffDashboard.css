@@ -1,32 +1,25 @@
+/* MedicalStaffDashboard.css */
+
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
 
 /* Global styles */
-body, html {
+body,
+html {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
   height: 100%;
+    
 }
 
 .container-SearchBox {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Align items to the top */
+  align-items: flex-start;
 }
 
-/* Medical staff dashboard styles */
-.logout-button {
-  text-align: center;
-  padding: 1rem;
-  padding-bottom: 2.2rem;
-  position: relative;
-  top: 10px;
-  right: 10px;
-  height: 4vh;
-  background-color: #000000;
-  border-radius: 30px;
-  color: #ffffff;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add 3D shadow effect */
+.results{
+  direction: rtl;
 }
 
 .hello-doctor {
@@ -40,42 +33,151 @@ body, html {
   height: 5vh;
   margin-top: 6vh;
   text-align: center;
-  font-size: 1vw;
   margin-bottom: 3vh;
-  border: none;
-  border-radius: 10px;
   padding: 0.5vh;
   outline: none;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add 3D shadow effect */
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-size: 2vh;
+  border: none;
+  border-radius: 2vh;
+  cursor: pointer;
+  
 }
 
-.search-Bar{
+.search-Bar {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Align items to the top */
-
+  align-items: flex-start;
+  
+  
 }
 
 .searchBarBtn {
   width: 12vw;
   height: 5vh;
-  font-size: 1vw;
+  font-size: 1.5vh;
   background-color: #a4d65e;
-  color: #ffffff;
+  color: white;
   border: none;
+  border-radius: 2vh;
   cursor: pointer;
   margin-top: 6vh;
-  margin-right: 3vw; /* Add spacing */
-  border-radius: 10px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add 3D shadow effect */
-  transition: background-color 0.3s ease; /* Add transition effect */
+  margin-right: 3vw;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
   display: flex;
-  align-items: center; /* Center the button content vertically */
-  justify-content: center; /* Center the button content horizontally */
+  align-items: center;
+  justify-content: center;
 }
 
 .searchBarBtn:hover {
-  background-color: #86b93d; /* Change color on hover */
+  background-color: #86b93d;
 }
 
-/* Add more styles as needed */
+.patient-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 3vh;
+  padding: 1.5rem;
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  height: 50vh;
+  overflow: auto;
+  direction: rtl;
+
+}
+
+.patient-detail {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+.detail-label {
+  font-weight: bold;
+  margin-right: 1rem;
+  background-color: transparent;
+  color: #101010;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.detail-value {
+  font-weight: normal;
+  background-color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+/* Scrollbar styles */
+.patient-details::-webkit-scrollbar {
+  width: 0.8vw;
+}
+
+.patient-details::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.patient-details::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 0.4vw;
+}
+
+.patient-details::-webkit-scrollbar-thumb:hover {
+  background-color: #6f9443;
+}
+
+/* Adjustments for smaller screens */
+@media screen and (max-width: 100%) {
+  .patient-details {
+    flex-direction: column;
+    overflow: auto;
+    height: auto;
+  }
+
+  .patient-detail {
+    width: 100%;
+  }
+
+  .searchBarBtn {
+    width: 25vw;
+    font-size: 3vw;
+    margin-top: 3vh;
+    margin-right: 0;
+  }
+}
+
+.beautyHeadLine{
+  color: #5a6266;
+  text-shadow: 2px 2px 4px rgba(4, 92, 92, 0.5);
+  font-family: 'Arial', sans-serif;
+  font-size: 2.5rem;
+  transform: skew(-10deg);
+  margin-right: 0.5vw;
+  direction: rtl;
+
+}
+
+.Buttones {
+  display: flex;
+  justify-content: center;
+  margin-top: 2vh;
+}
+
+.smaller-btn {
+  margin: 0 1vw;
+  padding: 1vh 2vw;
+  font-size: 1.5vh;
+  background-color: #a4d65e;
+  color: white;
+  border: none;
+  border-radius: 2vh;
+  cursor: pointer;
+}
+
+.smaller-btn:hover {
+  background-color: #a4d65e;
+}

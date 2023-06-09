@@ -1,10 +1,12 @@
 import React from 'react';
 import { collection, query, where, getDocs, getFirestore, updateDoc } from "firebase/firestore";
 import './UserEmailContainer.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const db = getFirestore();
 
 const UserEmailContainer = ({ userEmail }) => {
-  
   const handleClick = async () => {
     const selectedRole = document.getElementById("myS").value;
     console.log(selectedRole);
@@ -20,6 +22,7 @@ const UserEmailContainer = ({ userEmail }) => {
         await updateDoc(doc.ref, {
           role: selectedRole
         });
+        toast.success('Role changed successfully');
       }
     });
   };
@@ -38,8 +41,9 @@ const UserEmailContainer = ({ userEmail }) => {
         </label>
       </div>
       <button onClick={handleClick} className="apply-button">
-          החל
-        </button>
+        החל
+      </button>
+      <ToastContainer />
     </div>
   );
 };
