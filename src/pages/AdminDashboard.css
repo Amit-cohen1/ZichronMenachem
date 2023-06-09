@@ -6,26 +6,17 @@ body, html {
    margin: 0;
    padding: 0;
    height: 100%;
-}
-
-.logout-button {
-   font-family: 'Open Sans', sans-serif;
-   text-align: center;
-   padding-bottom: 0.8%;
-   position: relative;
-   right: 1%;
-   height: 3%;
-   background-color: #000000;
-   color: #ffffff;
+   direction: rtl;
 }
 
 .hello {
-   font-family: 'Open Sans', sans-serif;
-   text-align: center;
-   margin: 2%;
-   font-size: 2.5vw;
-   font-weight: bold;
-   color: black;
+   color: #5a6266;
+  text-shadow: 2px 2px 4px rgba(4, 92, 92, 0.5);
+  font-family: 'Arial', sans-serif;
+  font-size: 2.5rem;
+  transform: skew(-10deg);
+  margin-right: 0.5vw;
+  direction: rtl;
 }
 
 .containerMain {
@@ -49,8 +40,8 @@ body, html {
    border: none;
    border-radius: 1vw;
    box-shadow: 0 0.8vw 1.6vw 0 rgba(0, 0, 0, 0.2), 0 0.6vw 2vw 0 rgba(0, 0, 0, 0.19);
-   font-size: 0.7vw;
    margin-bottom: 1%;
+   height: 5vh;
 }
 
 .AdminBtn1 {
@@ -58,7 +49,8 @@ body, html {
    margin-bottom: 1%;
    font-family: 'Open Sans', sans-serif;
    width: 7%;
-   font-size: 0.7vw;
+   font-size: 1vw;
+   height: 5vh;
    background-color: #a4d65e;
    color: #ffffff;
    border: none;
@@ -66,6 +58,7 @@ body, html {
    border-radius: 2.5vw;
    color: black;
    font-weight: bold;
+   
 }
 
 .AdminBtn2 {

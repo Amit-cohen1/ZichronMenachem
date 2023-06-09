@@ -4,8 +4,9 @@ import './MedicalStaffDashboard.css';
 import Background from '../components/Background';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import LogoutButton from '../components/LogoutButton';
 
-const searchPatientById = async (patientId, setSearchResults) => {
+const searchPatientById = async (patientId, setSearchResults, setInitialLoad) => {
   try {
     const childRef = collection(firestore, 'Childrens');
     const querySnapshot = await getDocs(query(childRef, where('id', '==', patientId)));
@@ -17,25 +18,17 @@ const searchPatientById = async (patientId, setSearchResults) => {
     } else {
       setSearchResults([]);
     }
+    setInitialLoad(false);
   } catch (error) {
     console.error('Error searching for patient:', error);
   }
-};
-
-const handleLogout = () => {
-  auth.signOut()
-    .then(() => {
-      console.log('User logged out successfully');
-    })
-    .catch((error) => {
-      console.error('Error logging out:', error);
-    });
 };
 
 const MedicalStaffDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [userName, setUserName] = useState('');
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -45,14 +38,25 @@ const MedicalStaffDashboard = () => {
   }, []);
 
   const handleSearch = () => {
-    searchPatientById(searchQuery, setSearchResults);
+    searchPatientById(searchQuery, setSearchResults, setInitialLoad);
+  };
+
+  const handleLogout = () => {
+    auth
+      .signOut()
+      .then(() => {
+        console.log('User logged out successfully');
+      })
+      .catch((error) => {
+        console.error('Error logging out:', error);
+      });
   };
 
   return (
     <Background>
       <div>
-        <button className="logout-button" onClick={handleLogout}>התנתק</button>
-        <h2 className="hello-doctor">שלום {userName}</h2>
+          <LogoutButton />
+        <h2  className="beautyHeadLine">שלום {userName}</h2>
         <div className='container-SearchBox'>
           <div className="search-Bar">
             <input
@@ -62,23 +66,117 @@ const MedicalStaffDashboard = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="חיפוש מטופל לפי תעודת זהות"
             />
-            <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
           </div>
+          <button className='searchBarBtn' onClick={handleSearch}>חיפוש</button>
         </div>
 
         {/* Display search results */}
-        {searchResults.length === 0 && <h3>Patient not found</h3>}
-        {searchResults.length > 0 && (
-          <div>
-            <h3>Patient Details:</h3>
-            {searchResults.map((patient) => (
-              <div key={patient.id}>
-                <p>{patient.id}</p>
-                {/* Display other patient details */}
-              </div>
-            ))}
-          </div>
-        )}
+        {!initialLoad && searchResults.length === 0 && <h3 className='beautyHeadLine'>מטופל לא נמצא</h3>}
+{!initialLoad && searchResults.length > 0 && (
+  <div className="results">
+    <div className="Buttones">
+            <button className="searchBarBtn smaller-btn">העלאת קבצים</button>
+            <button className="searchBarBtn smaller-btn">היסטוריה רפואית</button>
+            <button className="searchBarBtn smaller-btn">הזנת פגישה</button>
+</div>
+             
+    <h3 className="beautyHeadLine">פרטי מטופל:</h3>
+    {searchResults.map((patient) => (
+      <div className="patient-details" key={patient.id}>
+        <div className="patient-detail">
+          <span className="detail-label">תעודת זהות:</span>
+          <span className="detail-value">{patient.id}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">שם פרטי:</span>
+          <span className="detail-value">{patient.firstName}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">שם משפחה:</span>
+          <span className="detail-value">{patient.lastName}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">תאריך לידה:</span>
+          <span className="detail-value">{patient.birthDate}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">גיל:</span>
+          <span className="detail-value">{patient.age}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">מין:</span>
+          <span className="detail-value">{patient.gender}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">כתובת:</span>
+          <span className="detail-value">{patient.street}, {patient.houseNum}, {patient.city}, {patient.postalCode}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">מספר טלפון בית:</span>
+          <span className="detail-value">{patient.homePhoneNumber}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">מספר טלפון פרטי:</span>
+          <span className="detail-value">{patient.momPhoneNumber}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">מספר טלפון עבודה של האם:</span>
+          <span className="detail-value">{patient.momWorkPhone}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">מספר טלפון פרטי של האב:</span>
+          <span className="detail-value">{patient.dadPhoneNumber}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">מספר טלפון עבודה של האב:</span>
+          <span className="detail-value">{patient.dadWorkPhone}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">שם הרופא:</span>
+          <span className="detail-value">{patient.doctor}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">מספר טלפון הרופא:</span>
+          <span className="detail-value">{patient.docPhoneNumber}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">המדריך:</span>
+          <span className="detail-value">{patient.guide}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">סיום טיפול פעיל:</span>
+          <span className="detail-value">{patient.endActiveTreatment}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">המקום בבית החולים:</span>
+          <span className="detail-value">{patient.hospital}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">סוג הטיפול:</span>
+          <span className="detail-value">{patient.diagnosis}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">תרופות:</span>
+          <span className="detail-value">{patient.medicines}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">אלרגיות:</span>
+          <span className="detail-value">{patient.allergies}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">HMO:</span>
+          <span className="detail-value">{patient.hmo}</span>
+        </div>
+        <div className="patient-detail">
+          <span className="detail-label">הערות:</span>
+          <span className="detail-value">{patient.comments}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+
+          
       </div>
     </Background>
   );
