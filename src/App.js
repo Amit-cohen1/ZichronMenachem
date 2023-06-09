@@ -18,6 +18,7 @@ import CampRegistration from './pages/CampRegistration';
 import UploadDocuments from './pages/UploadDocuments';
 
 
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
