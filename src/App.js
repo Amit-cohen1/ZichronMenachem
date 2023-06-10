@@ -13,7 +13,7 @@ import AfterReg from './pages/AfterReg';
 import WaitForAdmin from './pages/WaitForAdmin'
 import LoadingIndicator from './components/LoadingIndicator';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MedicalHistory from './pages/MedicalHistory';
+import MedicalHistory from './components/MedicalHistory';
 import CampRegistration from './pages/CampRegistration';
 import UploadDocuments from './pages/UploadDocuments';
 
