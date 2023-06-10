@@ -3,7 +3,7 @@
     position: relative;
     width: 100vw;
     height: 100vh;
-    overflow: hidden; /* Add this line */
+    overflow: auto; /* Add this line */
   }
   
    /* background project image css and source*/
@@ -12,12 +12,14 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    max-height: 300%;
     background-image: url('./Background-Screen.png');
     background-size: cover;
     background-position: center;
     z-index: -1;
     pointer-events: none; /* Add this line */
+    
   }
   
   /* heeder for style top page  */
@@ -25,10 +27,12 @@
     background-color: rgba(205, 227, 240, 0.8); /* Lighter color with 80% opacity */
     padding: 30px;
     display: flex;
-    justify-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: -1;
+  }
+  body{
+    background-color: #71C9CE;
   }

@@ -13,10 +13,7 @@ const DoctorMeet = ({ userName, childID }) => {
   const [locationToGo, setLocationToGo] = useState('');
   const [appointmentDate, setAppointmentDate] = useState('');
   
-  useEffect(() => {
-    const currentDate = new Date();
-    setAppointmentDate(currentDate.toLocaleString('en-US'));
-  }, []);
+
 
   useEffect(() => {
     const childRef = collection(firestore, 'Childrens');
@@ -47,13 +44,17 @@ const DoctorMeet = ({ userName, childID }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    
+    const currentDate = new Date();
+    setAppointmentDate(currentDate.toLocaleString('en-US'));
+
     // Create a new document
     const newDocRef = await addDoc(collection(firestore, 'DoctorMeet'), {
-      childID: childID,
+      childID: childID.toString(),
       summary: summary,
       prescription: prescription,
-      appointmentDate: appointmentDate,
+      appointmentDate: currentDate.toLocaleString('en-US'),
+      doctorName: userName,
     });
   
     console.log('New document created with ID:', newDocRef.id);
