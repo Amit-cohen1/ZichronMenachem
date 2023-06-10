@@ -71,7 +71,7 @@ const MedicalStaffDashboard = () => {
               <DoctorMeet userName={userName} childID={searchResults[0].id}/>
             </div>
 
-            <h3 className="beautyHeadLine">פרטי מטופל:</h3>
+            <h3 id='uniqe' className="beautyHeadLine">פרטי מטופל:</h3>
             {searchResults.map((patient) => (
               <div className="patient-details" key={patient.id}>
                 <div className="patient-detail">
@@ -149,10 +149,6 @@ const MedicalStaffDashboard = () => {
                   <span className="detail-value">{patient.diagnosis}</span>
                 </div>
                 <div className="patient-detail">
-                  <span className="detail-label">תרופות:</span>
-                  <span className="detail-value">{patient.medicines}</span>
-                </div>
-                <div className="patient-detail">
                   <span className="detail-label">אלרגיות:</span>
                   <span className="detail-value">{patient.allergies}</span>
                 </div>
@@ -160,9 +156,13 @@ const MedicalStaffDashboard = () => {
                   <span className="detail-label">HMO:</span>
                   <span className="detail-value">{patient.hmo}</span>
                 </div>
-                <div className="patient-detail">
+                <div  className="patient-detail Medicines">
                   <span className="detail-label">הערות:</span>
                   <span className="detail-value">{patient.comments}</span>
+                </div>
+                <div  className="patient-detail Medicines">
+                  <span className="detail-label">תרופות:</span>
+                  <span className="detail-value">{patient.medicines}</span>
                 </div>
               </div>
             ))}

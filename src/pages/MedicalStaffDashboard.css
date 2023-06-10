@@ -9,7 +9,6 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
-    
 }
 
 .container-SearchBox {
@@ -41,15 +40,12 @@ html {
   border: none;
   border-radius: 2vh;
   cursor: pointer;
-  
 }
 
 .search-Bar {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  
-  
 }
 
 .searchBarBtn {
@@ -84,10 +80,11 @@ html {
   background-color: transparent;
   border-radius: 10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  height: 50vh;
+  height: 60vh;
+  width: 80vw;
   overflow: auto;
   direction: rtl;
-
+  margin-right: 10vw;
 }
 
 .patient-detail {
@@ -95,24 +92,20 @@ html {
   display: flex;
   align-items: center;
   width: 50%;
-  
 }
 
 .detail-label {
   font-weight: bold;
   margin-right: 1rem;
-
   color: #101010;
   padding: 0.5rem 1rem;
-  
-  background-color: #bbde8b;
 }
 
 .detail-value {
   font-weight: normal;
-  background-color: #bbde8b;
+  background-color: #fefefe;
   padding: 0.5rem 1rem;
- 
+  border-radius: 2vh;
 }
 
 /* Scrollbar styles */
@@ -122,24 +115,54 @@ html {
 
 .patient-details::-webkit-scrollbar-track {
   background-color: white;
-  border-radius: 1;
+  border-radius: 0.4vw;
 }
 
 .patient-details::-webkit-scrollbar-thumb {
-  background-color: white;
+  background-color: rgb(0, 0, 0);
   border-radius: 0.4vw;
 }
 
 .patient-details::-webkit-scrollbar-thumb:hover {
-  background-color: #6f9443;
+  background-color: #585a56;
+}
+
+/* Scrollbar buttons */
+.patient-details::-webkit-scrollbar-button {
+  display: none; /* Hide the default buttons */
+}
+
+/* Scrollbar arrows */
+.patient-details::-webkit-scrollbar-corner {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%235a7750' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 60%; /* Adjust the size as needed */
+}
+
+.patient-details::-webkit-scrollbar-corner:vertical:active,
+.patient-details::-webkit-scrollbar-corner:vertical:hover {
+  background-color: #585a56; /* Change color on hover or active state */
+}
+
+.patient-details::-webkit-scrollbar-corner:horizontal {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%235a7750' viewBox='0 0 24 24'%3E%3Cpath d='M14 7l-5 5 5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 60%; /* Adjust the size as needed */
+  transform: rotate(180deg); /* Rotate the arrow for scroll down */
+}
+
+.patient-details::-webkit-scrollbar-corner:horizontal:active,
+.patient-details::-webkit-scrollbar-corner:horizontal:hover {
+  background-color: #585a56; /* Change color on hover or active state */
 }
 
 /* Adjustments for smaller screens */
-@media screen and (max-width: 100%) {
+@media screen and (max-width: 600px) {
   .patient-details {
-    flex-direction: column;
-    overflow: auto;
-    height: auto;
+    display: flex;
+    
   }
 
   .patient-detail {
@@ -149,24 +172,25 @@ html {
   .searchBarBtn {
     width: 25vw;
     font-size: 3vw;
-    margin-top: 3vh;
-    margin-right: 0;
   }
-   .popup {
+
+  .popup {
     max-width: 90vw;
     max-height: 90vh;
     padding: 10px;
   }
+  .beautyHeadLine {
+    margin-top: 10vh;
+  }
 }
 
-.beautyHeadLine{
+.beautyHeadLine {
   color: #5a6266;
   text-shadow: 2px 2px 4px rgba(4, 92, 92, 0.5);
   font-family: 'Arial', sans-serif;
   font-size: 2.5rem;
   margin-right: 0.5vw;
   direction: rtl;
-
 }
 
 .Buttones {
@@ -225,5 +249,12 @@ html {
   box-shadow: #101010;
   border: none;
   margin-bottom: 20vh;
- 
+}
+
+#uniqe {
+  margin-right: 10vw;
+}
+
+.Medicines{
+  width: 100vw;
 }
