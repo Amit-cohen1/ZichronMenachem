@@ -1,12 +1,12 @@
-.body {
+/* .body {
     height: 100%;
 }
 
 .container-Parent {
     width: 80%; /* Adjust the width to your desired size */
-    margin: 0 auto;
-    margin-top: 15vh; /* Adjust the margin-top to position the container vertically */
-    padding: 20px;
+   /* margin: 0 auto;*/
+   /* margin-top: 15vh;*/ /* Adjust the margin-top to position the container vertically */
+    /*padding: 20px;
     background-color: rgb(255, 255, 255);
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -17,30 +17,30 @@
   .field-wrapper {
     display: flex;
     width: 400px;
-  }
+  }*/
   
 /*  .h4-parent{
     text-align: center;
   }*/
-  .parent-form{
+  /*.parent-form{
     width: 80%;
     display: flex;
     flex-direction: row;
     margin: 0 auto;
     flex-wrap: wrap;
 
-  }
+  }*/
 
 
-  .label-parent{
+ /* .label-parent{*/
     /*display: inline-block;
     font-family: 'Open Sans', sans-serif;
     text-align: center;*/
     /*width: 33%;*/
    /* width: 400px;*/
-   display: inline-block;
+  /* display: inline-block;
    margin-right: 10px;
-  }
+  }*/
   
   /*.input-parent {
     width: 30%;
@@ -51,6 +51,83 @@
     border-radius: 4px;
   }*/
 
-  .input-parent, textarea {
+ /* .input-parent, textarea {
     display: inline-block;
+  } */
+
+  .form-container {
+    /*display: grid;
+    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;*/
+    display: flex;
+    flex-wrap: wrap;
+
   }
+  
+  .form-group {
+   /* border: 1px solid #ccc;
+    padding: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    gap:10px;*/
+    flex: 1 1 100%;
+    margin-bottom: 10px;
+  }
+
+  .field-row {
+    display: flex;
+    /*flex-wrap: wrap;*/
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .field-row > * { 
+    margin-right: 20px;
+  }
+
+  .field-row input {
+    margin-right: 10px;
+  }
+
+  .textArea-field {
+    display: flex;
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+
+  .textArea-field textarea {
+    vertical-align: middle;
+    height: 100px;
+    width: 300px;
+    margin-right: 10px;
+    resize: none;
+  }
+
+  .textArea-field > * { 
+    margin-right: 40px;
+    margin-left: 40px;
+  }
+
+  .squares-container {
+    display: flex;
+    justify-content: space-around; 
+    padding: 10px;
+  }
+
+  .square {
+    display: flex;
+    height: 200px;
+    width: 300px;
+    border: 1px solid black;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .square-content {
+    text-align: center;
+  }
+  .square-content h5 {
+    margin-bottom: 50px;
+  }
+
+
