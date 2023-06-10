@@ -1,14 +1,13 @@
 
 
-  body, html {
+  /*body, html {
     height: 100%;
     margin: 0;
     padding: 0;
-  }
+  }*/
 
-  form {
-    width: 95%; /* Adjust the width as needed */
-    /*max-width: 600px;*/ /* Set a maximum width if desired */
+  .camp-reg-form {
+    /*width: 95%;*/ 
     margin: 0 auto;
   }
 
