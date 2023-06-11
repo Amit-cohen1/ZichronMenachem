@@ -16,8 +16,8 @@ const UploadDocuments = ({ userId, handleClosePopup }) => {
 
   const handleUpload = () => {
     if (file) {
-      const storageRef = ref(storage, file.name);
-
+      const storageRef = ref(storage,'תיק חולה/' + file.name);
+      console.log(userId);
       // Create metadata object
       const metadata = {
         contentType: file.type,
@@ -55,7 +55,7 @@ const UploadDocuments = ({ userId, handleClosePopup }) => {
   );
 };
 
-const MedicalStaff = ({ id }) => {
+const UploadDoc = ({ id }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleClickUpload = () => {
@@ -85,4 +85,4 @@ const MedicalStaff = ({ id }) => {
   );
 };
 
-export default MedicalStaff;
+export default UploadDoc;
