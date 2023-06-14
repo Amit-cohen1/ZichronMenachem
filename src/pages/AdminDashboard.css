@@ -17,6 +17,7 @@ body, html {
   transform: skew(-10deg);
   margin-right: 0.5vw;
   direction: rtl;
+  margin-top: 1.3vh;
 }
 
 .containerMain {
@@ -28,6 +29,7 @@ body, html {
    display: flex;
    align-items: center;
    justify-content: center;
+   margin-top: 5vh;
 }
 
 .searchBarAdmin {
@@ -103,9 +105,8 @@ body, html {
 }
 
 .user-list {
-   margin-top: 1%;
-   padding-right: 1%;
-   height: 30vh;
+   height: 58vh;
+
 }
 
 .user-list-item {

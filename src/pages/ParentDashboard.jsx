@@ -5,6 +5,16 @@ import { firestore } from '../firebase';
 import {auth} from '../firebase';
 import Background from '../components/Background';
 import '../pages/ParentDashboard.css'
+import LogoutButton from '../components/LogoutButton';
+import UploadDocuments from './UploadDocuments';
+import DoctorMeet from '../components/DoctorMeet';
+
+
+
+
+const checkChildId=false;
+
+
 
 // component of the profile fields- gets the label (such as first name), its name
  const ProfileField = ({ label, name, profileData, handleInputChange, isEditing }) => {
@@ -41,20 +51,25 @@ import '../pages/ParentDashboard.css'
     );
   };
 
+  
 
 const ParentDashboard = () => {
-  // Content and functionality for the parent dashboard
 
-  const handleLogout = () => {
-    auth.signOut()
-      .then(() => {
-        console.log('User logged out successfully');
-        // Perform any additional cleanup or redirection logic here
-      })
-      .catch((error) => {
-        console.error('Error logging out:', error);
-      });
-  };
+  const [userName, setUserName] = useState('');
+  const [childID, setChildID] = useState('');
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      setUserName(user.displayName);
+      console.log("ID:"+user.displayName);
+    }
+  }, []);
+  
+ 
+
+  
+  
 
   //State for profile data and editing mode
   const[profileData, setProfileData] = useState({
@@ -92,8 +107,9 @@ const ParentDashboard = () => {
   })
 
   const [isEditing, setIsEditing] = useState(false);
-
-
+ 
+      
+ 
   // fetch patient data on component mount
   useEffect(() => {
 
@@ -101,13 +117,13 @@ const ParentDashboard = () => {
       try {
         const userQuery = query(collection(firestore, 'users'), where('email', '==', auth.currentUser.email));
         const userSnapshot = await getDocs(userQuery);
+        console.log("flag1");
         if (!userSnapshot.empty) {
           const userDoc = userSnapshot.docs[0];
           const userData = userDoc.data();
           const childId= userData.childId;
-          // TEST
-          console.log('User data:', userData);
-          //
+          setChildID(childId);
+          console.log(childID);
           if (childId) { // if it's not a new user and has a childId
             const childQuery = query(collection(firestore, 'Childrens'), where('id', '==', childId));
             onSnapshot(childQuery, (querySnapshot) => {
@@ -119,6 +135,8 @@ const ParentDashboard = () => {
               )
             });
           } 
+        }else{
+          
         }
       } catch (error) {
         console.error('Error fetching profile data:', error);
@@ -163,12 +181,13 @@ const ParentDashboard = () => {
           console.log('profile data:', profileData);
         }
         setIsEditing(false);
+        
+       
       }
     } catch (error) {
       console.error('Error saving data:', error);
     }
   };
-
 
   // Handle input change event
   const handleInputChange = (event) => {
@@ -182,31 +201,73 @@ const ParentDashboard = () => {
       }));
     };
 
-  // function for the options below the patient details. takes to other pages.
-  const Square = ({ title, path }) => (
-      <div className="square">
-        <div className="square-content">
-        <h5>{title}</h5>
-        <Link to={path}>
-          <button>לחץ כאן</button>
-        </Link>
-      </div>
-      </div>
-    );
+    
+    // const [flag, setFlag] = useState(true);
+    // const useCheckIfDataFull = () => {
+    //   const [isDataFull, setIsDataFull] = useState(false);
+    
+    
+    //   useEffect(() => {
+    //     const fetchData = async () => {
+    //       try {
+    //         const userQuery = query(collection(firestore, 'users'), where('email', '==', auth.currentUser.email));
+    //         const userSnapshot = await getDocs(userQuery);
+    //         if (!userSnapshot.empty) {
+    //           const userDoc = userSnapshot.docs[0];
+    //           const userData = userDoc.data();
+    //           const childId = userData.childId;
+    //           console.log('User data:', userData);
+    
+    //           const isDataFull = !!childId && childId.length > 0;
+    //           console.log('Is data full:', isDataFull);
+    //           setIsDataFull(isDataFull);
+    
+    //           if (!isDataFull) {
+    //             setFlag(false);
+    //             console.log('Flag:', flag);
+    //           }
+    //         }
+    //       } catch (error) {
+    //         console.log('Error fetching data:', error);
+    //       }
+    //     };
+    
+    //     fetchData();
+    //   }, []);
+    
+    //   return isDataFull;
+    // };
+
+    // useCheckIfDataFull();
     
 
+    // const handleFlag = () => {
+    //   if (!flag) {
+    //     handleEditClick(); // Call handleFlag only if flag is false
+    //   }
+    // };
+
+  // console.log("HERE:"+flag)
   return (
-    /*<Background>*/
-    <div className='container-Parent'>
-      <button className="logout-button" onClick={handleLogout}>התנתק</button> 
-      <h2>Welcome, Parent!</h2>
+    <Background >
+    <LogoutButton   />
+      <h2 className='beautyHeadLine'>שלום {userName}</h2>
+      <div className='patientDetails'>
+      <div >  
+      {isEditing  ? (
+        
+  <button className="searchBarBtn smaller-btn" type="button" onClick={handleSaveClick}>שמור</button>
+) : (
+  <button className="searchBarBtn smaller-btn" type="button" onClick={handleEditClick}>ערוך</button>
+)}
+      </div>
       <div>
-        <h4 className='h4-parent'>פרופיל ילד</h4>
+        <h4 className='beautyHeadLine'>פרופיל ילד</h4>
         <form className='parent-form'>
           <div className="form-container">
             <div className="form-group">
             <div className="field-row">
-              <ProfileField label="תעודת זהות" name="id" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+            <ProfileField label="תעודת זהות" name="id" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} />
               <ProfileField label="שם פרטי" name="firstName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} />
               <ProfileField label="שם משפחה" name="lastName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} />
               </div>
@@ -277,25 +338,20 @@ const ParentDashboard = () => {
           <TextAreaField label="הערות נוספות" name="comments" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
         </form>
       </div>
-
-      <div>
-      {isEditing ? (
-      <button type="button" onClick={handleSaveClick}> שמור </button>
-      ) : (
-      <button type="button" onClick={handleEditClick}> ערוך </button>
-      )}
-      </div>
-
-      <div>
-        <div className="squares-container">   
-          <Square title="היסטוריה רפואית" path="/medical-history" />
-          <Square title="טופס רישום למחנה" path="/camp-registration" />
-          <Square title="העלאת מסמכים" path="/upload-documents" />
-        </div>        
-      </div>
+      <div className="Buttones-parent" >
+      
+  
+    <UploadDocuments userId={"123"} />
+    <button className="searchBarBtn smaller-btn">היסטוריה רפואית</button>
+    <Link to = {"/camp-registration"}>
+    <button className="searchBarBtn smaller-btn">הרשמה למחנה</button>
+    </Link>
+    
+  
+    </div>
 
     </div>
-   /* </Background>*/
+   </Background>
   );
 };
 

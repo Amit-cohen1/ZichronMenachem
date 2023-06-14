@@ -68,10 +68,10 @@ const AdminDashboard = () => {
   
   return (
     <Background>
-      <div className="logout-container">
+      <div>
           <LogoutButton />
-        </div>
-      <h2 className="hello">שלום {userName}</h2>
+        
+      <h2 className="beautyHeadLine">שלום {userName}</h2>
       <div className="containerMain">
         <div className="containerSearchBox">
           <input className='searchBarAdmin' type="text" placeholder="הכנס כתובת אימייל" value={searchTerm} onChange={handleSearchChange} />
@@ -94,6 +94,7 @@ const AdminDashboard = () => {
             handleAlotClicked && userEmails.length === 0 && <p>No users found</p>
           )}
         </div>
+      </div>
       </div>
     </Background>
   );

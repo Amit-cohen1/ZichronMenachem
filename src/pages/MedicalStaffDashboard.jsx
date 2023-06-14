@@ -6,7 +6,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import LogoutButton from '../components/LogoutButton';
 import UploadDocuments from './UploadDocuments';
 import DoctorMeet from '../components/DoctorMeet';
-
+import MedicalHistory from '../components/MedicalHistory';
 
 const searchPatientById = async (patientId, setSearchResults, setInitialLoad) => {
   try {
@@ -38,7 +38,7 @@ const MedicalStaffDashboard = () => {
       setUserName(user.displayName);
     }
   }, []);
-
+  
   const handleSearch = () => {
     searchPatientById(searchQuery, setSearchResults, setInitialLoad);
   };
@@ -67,7 +67,7 @@ const MedicalStaffDashboard = () => {
           <div className="results">
             <div className="Buttones">
                <UploadDocuments userId={searchResults[0].id} />
-              <button className="searchBarBtn smaller-btn">היסטוריה רפואית</button>
+              <MedicalHistory childID={searchResults[0].id}/>
               <DoctorMeet userName={userName} childID={searchResults[0].id}/>
             </div>
 
