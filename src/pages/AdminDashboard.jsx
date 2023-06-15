@@ -6,6 +6,7 @@ import Background from '../components/Background';
 import UserEmailContainer from '../components/UserEmailContainer';
 import './AdminDashboard.css';
 import LogoutButton from '../components/LogoutButton';
+import DefineTrip from '../components/DefineTrip';
 
 const AdminDashboard = () => {
   const [userEmails, setUserEmails] = useState([]);
@@ -68,10 +69,16 @@ const AdminDashboard = () => {
   
   return (
     <Background>
-      <div className="logout-container">
+      <div>
           <LogoutButton />
-        </div>
-      <h2 className="hello">שלום {userName}</h2>
+        
+      <h2 className="beautyHeadLine">שלום {userName}</h2>
+
+      <div id="mangeBtn"> 
+      <button className='smaller-btn' type="button" >ניהול מידע מערכת</button>
+      <DefineTrip />
+      </div>
+
       <div className="containerMain">
         <div className="containerSearchBox">
           <input className='searchBarAdmin' type="text" placeholder="הכנס כתובת אימייל" value={searchTerm} onChange={handleSearchChange} />
@@ -94,6 +101,7 @@ const AdminDashboard = () => {
             handleAlotClicked && userEmails.length === 0 && <p>No users found</p>
           )}
         </div>
+      </div>
       </div>
     </Background>
   );
