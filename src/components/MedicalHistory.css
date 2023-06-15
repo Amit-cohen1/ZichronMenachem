@@ -43,3 +43,6 @@
     transition: all 0.3s ease-in-out;
     /* background-color: #86b93d; */
 }
+.to-center{
+    text-align: center;
+}
