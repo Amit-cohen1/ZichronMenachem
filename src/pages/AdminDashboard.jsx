@@ -72,6 +72,7 @@ const AdminDashboard = () => {
           <LogoutButton />
         
       <h2 className="beautyHeadLine">שלום {userName}</h2>
+      <div id="mangeBtn"> <button className='smaller-btn' type="button" >ניהול מידע מערכת</button><button className='smaller-btn' type="button" >צור טיול</button></div>
       <div className="containerMain">
         <div className="containerSearchBox">
           <input className='searchBarAdmin' type="text" placeholder="הכנס כתובת אימייל" value={searchTerm} onChange={handleSearchChange} />

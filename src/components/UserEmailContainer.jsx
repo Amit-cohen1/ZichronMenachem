@@ -31,7 +31,7 @@ const UserEmailContainer = ({ userEmail }) => {
     <div className="user-email-container">
       <div className="user-email">{userEmail}</div>
       <div className="role-dropdown">
-        <label className="dropdown-label">
+        <label className="dropdown-label" >
           בחר תפקיד:
           <select id="myS" className="dropdown-select">
             <option value="admin">Admin</option>
@@ -40,7 +40,7 @@ const UserEmailContainer = ({ userEmail }) => {
           </select>
         </label>
       </div>
-      <button onClick={handleClick} className="apply-button">
+      <button className="apply-button" onClick={handleClick} >
         החל
       </button>
       <ToastContainer />

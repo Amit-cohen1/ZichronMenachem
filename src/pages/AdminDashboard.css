@@ -29,7 +29,7 @@ body, html {
    display: flex;
    align-items: center;
    justify-content: center;
-   margin-top: 5vh;
+  
 }
 
 .searchBarAdmin {
@@ -126,15 +126,8 @@ body, html {
    cursor: pointer;
 }
 
-.user-email {
-   font-weight: bold;
-   color: #333333;
-   font-size: 1vw;
-   margin-top: 0.5%;
-   margin-left: 10%;
-   white-space: nowrap; /* Prevent line breaks */
-  overflow: hidden; /* Hide overflowing content */
-  text-overflow: ellipsis; /* Display ellipsis for overflow */
+#mangeBtn{
+   margin-top: 3vh;
 }
 
 .displayBtn {
