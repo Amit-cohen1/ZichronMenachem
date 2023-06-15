@@ -63,3 +63,16 @@
    
   
 }
+.delete-button{
+  font-family: 'Open Sans', sans-serif;
+  width: 6vw;
+  font-size: 0.7vw;
+  background-color: red;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 2.5vw;
+  color: black;
+  font-weight: bold;
+  margin-left: 5%;
+}
