@@ -14,7 +14,7 @@ const MedicalHistory = ({ childID }) => {
       console.log('Child ID:', childID);
       try {
         // Fetch files from Firebase Storage
-        const storageRef = ref(storage, 'files');
+        const storageRef = ref(storage, 'תיק חולה/');
         const files = await listAll(storageRef);
 
         childID = childID.toString();
@@ -25,7 +25,7 @@ const MedicalHistory = ({ childID }) => {
             const metadata = await getMetadata(fileRef);
             console.log('File Metadata:', metadata); // Debugging
 
-            return metadata.customMetadata.childID === childID ? fileRef : null;
+            return metadata.customMetadata.userId === childID ? fileRef : null;
           })
         );
 
@@ -120,11 +120,11 @@ const MedicalHistory = ({ childID }) => {
 
           <h4>קבצים:</h4>
           {filesData.map((file) => (
-            <div key={file.fileName}>
+            <div className='cardMedicalHistory' key={file.fileName}>
               <p>סוג קובץ: {file.type}</p>
               <p>שם הקובץ: {file.fileName}</p>
               <p>נוצר בתאריך: {file.createdAt}</p>
-              <a href={file.downloadUrl} download>
+              <a target="_blank"  rel="noreferrer" className='print-btn' href={file.downloadUrl} download>
                 הורדה
               </a>
             </div>
