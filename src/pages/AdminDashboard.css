@@ -23,6 +23,7 @@ body, html {
 .containerMain {
    width: 80%;
    margin: 0 auto;
+   margin-bottom: 5vh;
 }
 
 .containerSearchBox {
@@ -128,10 +129,22 @@ body, html {
 
 #mangeBtn{
    margin-top: 3vh;
+   display: flex;
 }
 
 .displayBtn {
    margin-top: 0%;
 }
-
+#btn12{
+margin-bottom: 1%;
+font-size: 1.7vh;
+ background-color: #a4d65e;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 2vh;
+  cursor: pointer;
+  margin-right: 2vh;
+  padding: 1vh 2vw;
+}
 /* Add any additional styling as per your preference */
