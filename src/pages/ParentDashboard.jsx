@@ -3,6 +3,9 @@ import { Link, Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { doc, onSnapshot, setDoc, addDoc, updateDoc, collection, query, where, getDocs, getDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import {auth} from '../firebase';
+import LogoutButton from '../components/LogoutButton';
+import UploadDocuments from './UploadDocuments';
+import MedicalHistory from '../components/MedicalHistory';
 import Background from '../components/Background';
 import '../pages/ParentDashboard.css'
 
@@ -91,6 +94,9 @@ const ParentDashboard = () => {
     comments: '',
   })
 
+  const [userName, setUserName] = useState('');
+  const [childID, setChildID] = useState('');
+
   const [isEditing, setIsEditing] = useState(false);
 
   // state to store validation errors
@@ -158,9 +164,7 @@ const ParentDashboard = () => {
           const userDoc = userSnapshot.docs[0];
           const userData = userDoc.data();
           const childId= userData.childId;
-          // TEST
-          console.log('User data:', userData);
-          //
+          setChildID(childId);
           if (childId) { // if it's not a new user and has a childId
             const childQuery = query(collection(firestore, 'Childrens'), where('id', '==', childId));
             onSnapshot(childQuery, (querySnapshot) => {
@@ -220,14 +224,9 @@ const ParentDashboard = () => {
         } else { // new user, create a new doc in firestore and save changes
           const newChildDocRef = await addDoc(collection(firestore, 'Childrens'), profileData);
           const childSnapshot = await getDoc(newChildDocRef);
-          //test
-          console.log('child reference:', newChildDocRef);
-          console.log('childData:', childSnapshot);
-          //
           const idForUpdate= profileData.id;
           await updateDoc(userDoc.ref, { childId: idForUpdate });
-          //test
-          console.log('profile data:', profileData);
+          setChildID(idForUpdate);
         }
         setIsEditing(false);
         setErrors({});
@@ -261,16 +260,25 @@ const ParentDashboard = () => {
         </Link>
       </div>
       </div>
-    );
-    
+  );
 
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      setUserName(user.displayName);
+      console.log("ID:"+user.displayName);
+    }
+  }, []);
+  
+  
   return (
     <Background>
-    <div className='container-Parent'>
-      <button className="logout-button" onClick={handleLogout}>התנתק</button> 
-      <h2>Welcome, Parent!</h2>
+    <LogoutButton />
+    <h2 className='beautyHeadLine'>שלום {userName}</h2>
+    <div className='patientDetails'>
       <div>
-        <h4 className='h4-parent'>פרופיל ילד</h4>
+        <h4 className='beautyHeadLine'>פרופיל ילד</h4>
         <form className='parent-form'>
           <div className="form-container">
             <div className="form-group">
@@ -349,18 +357,18 @@ const ParentDashboard = () => {
 
       <div>
       {isEditing ? (
-      <button type="button" onClick={handleSaveClick}> שמור </button>
+      <button className= "searcgBarBtn smaller-btn" type="button" onClick={handleSaveClick}> שמור </button>
       ) : (
-      <button type="button" onClick={handleEditClick}> ערוך </button>
+      <button className= "searcgBarBtn smaller-btn" type="button" onClick={handleEditClick}> ערוך </button>
       )}
       </div>
 
-      <div>
-        <div className="squares-container">   
-          <Square title="היסטוריה רפואית" path="/medical-history" />
-          <Square title="טופס רישום למחנה" path="/camp-registration" />
-          <Square title="העלאת מסמכים" path="/upload-documents" />
-        </div>        
+      <div className="Buttones-parent">
+        <UploadDocuments id={childID} />
+        <MedicalHistory childID={childID} />
+        <Link to = {"/camp-registration"}>
+          <button className="searchBarBtn smaller-btn">הרשמה למחנה</button>
+        </Link>      
       </div>
 
     </div>
