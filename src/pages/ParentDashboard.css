@@ -80,6 +80,10 @@
     margin-bottom: 50px;
   }
 
+  .error-input-message {
+    color: red;
+  }
+
 
   .Buttones-parent{
     margin-right: 30vw;

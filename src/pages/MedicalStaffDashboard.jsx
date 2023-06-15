@@ -8,6 +8,7 @@ import UploadDocuments from './UploadDocuments';
 import DoctorMeet from '../components/DoctorMeet';
 import MedicalHistory from '../components/MedicalHistory';
 
+
 const searchPatientById = async (patientId, setSearchResults, setInitialLoad) => {
   try {
     const childRef = collection(firestore, 'Childrens');
@@ -66,8 +67,8 @@ const MedicalStaffDashboard = () => {
         {!initialLoad && searchResults.length > 0 && (
           <div className="results">
             <div className="Buttones">
-               <UploadDocuments userId={searchResults[0].id} />
-              <MedicalHistory childID={searchResults[0].id}/>
+              <UploadDocuments id={searchResults[0].id} />
+              <MedicalHistory childID={searchResults[0].id} />
               <DoctorMeet userName={userName} childID={searchResults[0].id}/>
             </div>
 
