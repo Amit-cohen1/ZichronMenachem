@@ -17,6 +17,7 @@ body, html {
   transform: skew(-10deg);
   margin-right: 0.5vw;
   direction: rtl;
+  margin-top: 1.3vh;
 }
 
 .containerMain {
@@ -28,6 +29,7 @@ body, html {
    display: flex;
    align-items: center;
    justify-content: center;
+  
 }
 
 .searchBarAdmin {
@@ -103,9 +105,8 @@ body, html {
 }
 
 .user-list {
-   margin-top: 1%;
-   padding-right: 1%;
-   height: 30vh;
+   height: 58vh;
+
 }
 
 .user-list-item {
@@ -125,15 +126,8 @@ body, html {
    cursor: pointer;
 }
 
-.user-email {
-   font-weight: bold;
-   color: #333333;
-   font-size: 1vw;
-   margin-top: 0.5%;
-   margin-left: 10%;
-   white-space: nowrap; /* Prevent line breaks */
-  overflow: hidden; /* Hide overflowing content */
-  text-overflow: ellipsis; /* Display ellipsis for overflow */
+#mangeBtn{
+   margin-top: 3vh;
 }
 
 .displayBtn {
