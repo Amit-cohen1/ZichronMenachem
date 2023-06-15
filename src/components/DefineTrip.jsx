@@ -45,7 +45,7 @@ const DefineTrip = () => {
 
   return (
     <div>
-      <button className="smaller-btn" onClick={togglePopup}>
+      <button id='btn12' onClick={togglePopup}>
         הגדר טיול חדש
       </button>
       {showPopup && (

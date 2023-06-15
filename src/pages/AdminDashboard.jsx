@@ -75,8 +75,8 @@ const AdminDashboard = () => {
       <h2 className="beautyHeadLine">שלום {userName}</h2>
 
       <div id="mangeBtn"> 
-      <button className='smaller-btn' type="button" >ניהול מידע מערכת</button>
-      <DefineTrip />
+      <button id='btn12'  type="button" >ניהול מידע מערכת</button>
+      <DefineTrip id='btn12'  />
       </div>
 
       <div className="containerMain">
