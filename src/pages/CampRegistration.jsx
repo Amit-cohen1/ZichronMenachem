@@ -28,7 +28,7 @@ const FormDataContext = createContext();
 
 
 // The component of Camp Registration form
-const CampRegistration = () => {
+const CampRegistration = ({ tripDate, tripName }) => {
     const [step, setStep] = useState(1);
 
     // define the state to store the form data
@@ -52,19 +52,21 @@ const CampRegistration = () => {
         setStep(step - 1);
     };
 
+    console.log("date:", tripDate);
+    console.log("name:", tripName);
   
     return (
-    /*<Background>*/
+    <Background>
         <div>
-            <h2>טופס רישום למחנה</h2>
+            <h2>טופס רישום למחנה {tripName} בתאריך {tripDate}</h2>
             <FormDataContext.Provider value={{ formData }}> {/* provides the form data context to the components */}   
                 {step === 1 && <PersonalDetails onNext={handleNext} />}
                 {step === 2 && <MedicalDetails onBack={handleBack} onNext={handleNext} />}
-                {step === 3 && <ConsentPage onBack={handleBack} onSubmit={handleNext} />}
+                {step === 3 && <ConsentPage onBack={handleBack} onSubmit={handleNext} tripDate={tripDate} tripName={tripName} />}
                 {step === 4 && <SuccessSubmitPage />}
             </FormDataContext.Provider>
         </div>
-    /*</Background>*/
+    </Background>
     );
 };
 
@@ -72,7 +74,7 @@ const CampRegistration = () => {
 const PersonalDetails = ({ onNext }) => {
     const {formData } = useContext(FormDataContext);
     const [personalDetails, setPersonalDetails] = useState(formData.personalDetails || {});
-    
+    const [errors, setErrors] = useState({}); // State to store validation errors
 
     const handleFieldChange = (fieldName, value) => {
         setPersonalDetails((prevDetails) => ({
@@ -84,15 +86,83 @@ const PersonalDetails = ({ onNext }) => {
     const handleNext = (e) => {
         e.preventDefault();
 
+       if (validateForm()) {
         onNext({ personalDetails });
+      }
     };
+
+    const validatePhoneNumber = (value) => /^\d{9,10}$/.test(value);
+
+    const validationFunctions = {
+      id: { 
+        validate: (value) => value.length === 9,
+        errorMessage: 'מספר תעודת הזהות לא תקין. הכנס מספר בעל 9 ספרות.',
+      },
+      motherPhoneNumber: {
+        validate: validatePhoneNumber,
+        errorMessage: 'מספר הטלפון לא תקין. הכנס מספר בעל 9 או 10 ספרות.',
+      },
+      fatherPhoneNumber: {
+        validate: validatePhoneNumber,
+        errorMessage: 'מספר הטלפון לא תקין. הכנס מספר בעל 9 או 10 ספרות.',
+      },
+      motherWorkPhoneNumber: {
+        validate: validatePhoneNumber,
+        errorMessage: 'מספר הטלפון לא תקין. הכנס מספר בעל 9 או 10 ספרות.',
+      },
+      fatherWorkPhoneNumber: {
+        validate: validatePhoneNumber,
+        errorMessage: 'מספר הטלפון לא תקין. הכנס מספר בעל 9 או 10 ספרות.',
+      },
+      homePhoneNumber: {
+        validate: validatePhoneNumber,
+        errorMessage: 'מספר הטלפון לא תקין. הכנס מספר בעל 9 או 10 ספרות.',
+      },
+      childPhoneNumber: {
+        validate: validatePhoneNumber,
+        errorMessage: 'מספר הטלפון לא תקין. הכנס מספר בעל 9 או 10 ספרות.',
+      },
+      fax: {
+        validate: validatePhoneNumber,
+        errorMessage: 'מספר הטלפון לא תקין. הכנס מספר בעל 9 או 10 ספרות.'
+      },
+      email: { 
+        validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+        errorMessage: 'כתובת המייל שהכנסת אינה תקינה.',
+      },
+      postalCode: {
+        validate: (value) => value.length === 7,
+        errorMessage: 'המיקוד שהכנסת אינו תקין. הכנס מספר בעל 7 ספרות.',
+      },
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+    
+        Object.entries(validationFunctions).forEach(([name, { validate, errorMessage }]) => {
+            if (personalDetails.hasOwnProperty(name)) {
+                const value = personalDetails[name];
+                console.log("Value:", value);
+                const isValid = validate(value);
+                if (!isValid && value !== '') {
+                    newErrors[name] = errorMessage;
+                }
+            }
+        });
+        
+        // Set the errors state
+        setErrors(newErrors);
+    
+        // Return true if there are no errors
+        return Object.keys(newErrors).length === 0;
+      };
     
     // personal details fields
     const personalDetailsFields = [
         [
             { label: 'שם משפחה', name: 'lastName' },
             { label: 'שם פרטי', name: 'firstName' },
-            { label: 'תאריך לידה', name: 'dateOfBirth'},
+            { label: 'תאריך לידה', name: 'dateOfBirth', hasDate: true },
             { label: 'מין', name: 'gender' },
             { label: 'תעודת זהות', name: 'id' },
         ],
@@ -115,15 +185,15 @@ const PersonalDetails = ({ onNext }) => {
         ],
         [
             {label: 'שם האב', name: 'fatherName'},
+            {label: 'טלפון נייד', name: 'fatherPhoneNumber'},
             {label: 'מקום עבודה', name: 'fatherWorkPlace'},
             {label: 'טלפון בעבודה', name: 'fatherWorkPhoneNumber'},
-            {label: 'טלפון נייד', name: 'fatherPhoneNumber'},
         ],
         [
             {label: 'שם האם', name: 'motherName'},
+            {label: 'טלפון נייד', name: 'motherPhoneNumber'},
             {label: 'מקום עבודה', name: 'motherWorkPlace'},
             {label: 'טלפון בעבודה', name: 'motherWorkPhoneNumber'},
-            {label: 'טלפון נייד', name: 'motherPhoneNumber'},
         ],
 
       ];
@@ -143,6 +213,7 @@ const PersonalDetails = ({ onNext }) => {
                             hasOptions={field.hasOptions}
                             hasDate={field.hasDate}
                             dateLabel={field.dateLabel}
+                            error= {errors[field.name]}
                         />
                     ))}
                 </div>
@@ -161,8 +232,6 @@ const PersonalDetails = ({ onNext }) => {
 const MedicalDetails = ({ onBack, onNext }) => {
     const { formData } = useContext(FormDataContext);
     const [medicalDetails, setMedicalDetails] = useState(formData.medicalDetails || {});
-  
-    const [dateValue, setDateValue] = useState('');
 
     const handleFieldChange = (fieldName, value) => {
       setMedicalDetails((prevDetails) => ({
@@ -170,15 +239,6 @@ const MedicalDetails = ({ onBack, onNext }) => {
         [fieldName]: value,
       }));
     };
-
-    const handleDateChange = (fieldName, newDateValue) => {
-       // const newDateValue = event.target.value;
-        //setDateValue(newDateValue);
-        setMedicalDetails((prevDetails) => ({
-            ...prevDetails,
-            [fieldName]: newDateValue,
-        }));
-      };
   
     const handleNext = (e) => {
       e.preventDefault();
@@ -265,8 +325,7 @@ const MedicalDetails = ({ onBack, onNext }) => {
                             hasOptions={field.hasOptions}
                             hasDate={field.hasDate}
                             dateLabel={field.dateLabel}
-                            dateValue={field.dateValue}
-                            handleDateChange={handleDateChange}
+                            dateValue={field.dateValue}                          
                             />
                         ))}
                         </div>
@@ -285,10 +344,9 @@ const MedicalDetails = ({ onBack, onNext }) => {
       );
 };
 
-const ConsentPage = ({ onBack, onSubmit }) => {
+const ConsentPage = ({ onBack, onSubmit, tripDate, tripName }) => {
     const { formData } = useContext(FormDataContext);
     const [filledDate, setFilledDate] = useState('');
-    //const [consentChecked, setConsentChecked] = useState(false);
     const [consentChecked, setConsentChecked] = useState(formData.consentChecked || false);
     const [details, setDetails] = useState(formData.details || {});
     const [submitted, setSubmitted] = useState(false);
@@ -309,12 +367,8 @@ const ConsentPage = ({ onBack, onSubmit }) => {
                 onSubmit({ details, consentChecked, filledDate });
                 // save form data in formData context
                 const updatedFormData = { ...formData, details, consentChecked, filledDate };
-                console.log("filled date:", filledDate);
-                console.log("the data:", updatedFormData);
-                //setFormData(updatedFormData);
-
                 // save form data in firestore
-                const newFormRef = await addDoc(collection(firestore, 'CampRegistration'), { updatedFormData });
+                const newFormRef = await addDoc(collection(firestore, 'CampRegistration'), { formData: updatedFormData, tripDate: tripDate, tripName: tripName });
                 console.log('Document wriiten with ID: ', newFormRef.id);
                 setSubmitted(true);
             } catch (error) {
@@ -405,7 +459,7 @@ const ConsentPage = ({ onBack, onSubmit }) => {
                 <br />
                 <label>
                     תאריך:
-                    <input type="date" value={filledDate} onChange={handleFilledDate} /> {/*onChange={(e) => setFilledDate(e.target.value)} />*/}
+                    <input type="date" value={filledDate} onChange={handleFilledDate} />
                 </label>
                 <br />
                 <br />
@@ -422,7 +476,7 @@ const ConsentPage = ({ onBack, onSubmit }) => {
 
 
 // a reusable component for rendering input fields  
-const CustomField = ({ label, value, onChange, hasOptions, hasDate }) => {
+const CustomField = ({ label, value, onChange, hasOptions, hasDate, error }) => {
     const handleChange = (e) => {
       onChange(e.target.value);
     };
@@ -449,6 +503,7 @@ const CustomField = ({ label, value, onChange, hasOptions, hasDate }) => {
                     <input type="text" value={value} onChange={handleChange} />
             </label>
             )}
+            {error && <div className="error-input-message">{error}</div>}
         </div>
     );
   };
@@ -462,7 +517,6 @@ const SuccessSubmitPage = () => {
         
     );
 };
-
 
 
 export default CampRegistration;

@@ -62,6 +62,11 @@ useEffect(() => {
     return null;
   }
 
+  // added for a try
+  const tripDate = "01-07-2023";
+  const tripName = "'חוויות קיץ'";
+  //
+
   return (
     <Router>
       <Routes>
@@ -78,7 +83,7 @@ useEffect(() => {
         />
 
         <Route path="/medical-history" element={<MedicalHistory />} />
-        <Route path="/camp-registration" element={<CampRegistration />} />
+        <Route path="/camp-registration" element={<CampRegistration tripDate={tripDate} tripName={tripName} />} />
         <Route path="/upload-documents" element={<UploadDocuments />} />
       </Routes>
     </Router>
