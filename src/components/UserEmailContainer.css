@@ -17,6 +17,8 @@
   margin-left: 10%;
   width: 15vw;
   direction: ltr;
+  overflow-wrap: break-word ;
+  
  
 }
 
@@ -51,7 +53,7 @@
 .apply-button {
   font-family: 'Open Sans', sans-serif;
    width: 6vw;
-   font-size: 0.7vw;
+   font-size: 0.8vw;
    background-color: #a4d65e;
    color: #ffffff;
    border: none;
@@ -60,14 +62,13 @@
    color: black;
    font-weight: bold;
    margin-left: 5%;
-   
-  
+  font-weight: bold;
 }
 .delete-button{
   font-family: 'Open Sans', sans-serif;
   width: 6vw;
-  font-size: 0.7vw;
-  background-color: red;
+  font-size: 0.8vw;
+  background-color: rgb(245, 79, 79);
   color: #ffffff;
   border: none;
   cursor: pointer;
@@ -75,4 +76,9 @@
   color: black;
   font-weight: bold;
   margin-left: 5%;
+ font-weight: bold;
+  font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+  width: 6vw;
+  font-size: 0.8vw;
 }
