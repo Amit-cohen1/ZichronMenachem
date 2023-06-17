@@ -1,7 +1,7 @@
-import React, { useState, createContext, useContext, setFormData } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { firestore } from '../firebase';
-import { doc, addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import Background from '../components/Background';
 import './CampRegistration.css';
 
@@ -16,11 +16,11 @@ const BackToDashboardButton = () => {
     };
 
     return (
-        <button onClick={handleClick}>
+        <button className= "searcgBarBtn smaller-btn" onClick={handleClick}>
             חזור לעמוד הבית
         </button>
     );
-  };
+};
 
 
 // create a context to manage the form data
@@ -51,14 +51,11 @@ const CampRegistration = ({ tripDate, tripName }) => {
         }));
         setStep(step - 1);
     };
-
-    console.log("date:", tripDate);
-    console.log("name:", tripName);
   
     return (
     <Background>
         <div>
-            <h2>טופס רישום למחנה {tripName} בתאריך {tripDate}</h2>
+            <h2 className='beautyHeadLine'>טופס רישום למחנה {tripName} בתאריך {tripDate}</h2>
             <FormDataContext.Provider value={{ formData }}> {/* provides the form data context to the components */}   
                 {step === 1 && <PersonalDetails onNext={handleNext} />}
                 {step === 2 && <MedicalDetails onBack={handleBack} onNext={handleNext} />}
@@ -178,6 +175,8 @@ const PersonalDetails = ({ onNext }) => {
             { label: 'כניסה', name: 'entranceNumber' },
             { label: 'קומה', name: 'floor' },
             { label: 'דירה', name: 'apartment' },
+        ],
+        [
             { label: 'שכונה', name: 'neighborhood' },
             { label: 'עיר', name: 'city' },
             { label: 'מיקוד', name: 'postalCode' },
@@ -200,29 +199,33 @@ const PersonalDetails = ({ onNext }) => {
   
     return (
       <form className="camp-reg-form">
-        <h4>פרטים אישיים</h4>
-        <div className="field-group">
-            {personalDetailsFields.map((fieldGroup, index) => (
+        <h4 className='beautyHeadLine'>פרטים אישיים</h4>
+        <div className="buttons-section">
+            <div className="back-buttons">
+                <BackToDashboardButton />
+            </div>
+            <button className= "searcgBarBtn smaller-btn continue-btn" type="button" onClick={handleNext}>המשך</button>
+        </div>
+        <div className="form-container">
+            <div className="field-group">
+                {personalDetailsFields.map((fieldGroup, index) => (
                 <div key={index} className="field-group-inner">
                     {fieldGroup.map((field) => (
-                        <CustomField
-                            key={field.name}
-                            label={field.label}
-                            value={personalDetails[field.name] || ''}
-                            onChange={(value) => handleFieldChange(field.name, value)}
-                            hasOptions={field.hasOptions}
-                            hasDate={field.hasDate}
-                            dateLabel={field.dateLabel}
-                            error= {errors[field.name]}
-                        />
+                    <CustomField
+                    key={field.name}
+                    label={field.label}
+                    value={personalDetails[field.name] || ''}
+                    onChange={(value) => handleFieldChange(field.name, value)}
+                    hasOptions={field.hasOptions}
+                    hasDate={field.hasDate}
+                    dateLabel={field.dateLabel}
+                    error= {errors[field.name]}
+                    />
                     ))}
                 </div>
-            ))}
+                ))}
+            </div>
         </div>
-        <button type="button" onClick={handleNext}>
-                המשך
-        </button>
-        <BackToDashboardButton />
 
       </form>
     );
@@ -312,7 +315,15 @@ const MedicalDetails = ({ onBack, onNext }) => {
   
     return (
         <form className="camp-reg-form">
-            <h4>פרטים רפואיים</h4>
+            <h4 className='beautyHeadLine'>פרטים רפואיים</h4>
+            <div className="buttons-section">
+                <div className="back-buttons">
+                    <BackToDashboardButton />
+                    <button className= "searcgBarBtn smaller-btn" type= "button" onClick={handleBack}>חזור</button>
+                </div>
+                <button className= "searcgBarBtn smaller-btn continue-btn" type="button" onClick={handleNext}>המשך</button>
+            </div>
+            <div className="form-container">
             <div className="field-group">
                 {fieldGroups.map((fieldGroup, index) => (
                     <div key={index} className="field-group-inner">
@@ -331,14 +342,7 @@ const MedicalDetails = ({ onBack, onNext }) => {
                         </div>
                 ))}
             </div>
-
-           <button type= "button" onClick={handleBack}>
-                חזור
-           </button>
-            <button type="button" onClick={handleNext}>
-                המשך
-            </button>
-            <BackToDashboardButton />
+            </div>
 
     </form>
       );
@@ -416,10 +420,19 @@ const ConsentPage = ({ onBack, onSubmit, tripDate, tripName }) => {
     
     return (
         <div>
+            <div className="buttons-section">
+                <div className="back-buttons">
+                    <BackToDashboardButton />
+                    <button className= "searcgBarBtn smaller-btn" type= "button" onClick={handleBack}>חזור</button>
+                </div>
+                <button className= "searcgBarBtn smaller-btn submit-btn" type="submit" onClick={handleSubmit}>שלח</button>
+            </div>
             {submitted ? (
             <SuccessSubmitPage />
             ) : (
             <form className="camp-reg-form" onSubmit = {handleSubmit}>
+                <div className="consent-page">
+                <div className="form-container">
                 <div className="field-group">
                     {fieldGroups.map((fieldGroup, index) => (
                     <div key={index} className="field-group-inner">
@@ -437,7 +450,8 @@ const ConsentPage = ({ onBack, onSubmit, tripDate, tripName }) => {
                     </div>
                     ))}
                 </div>
-                <br />
+               <div className="disclaimer">
+               
                 <p>
                     לאחר המחנה ישלח אליכם סרט המתעד את המחנה. אנו מאשרים שימוש בתצלומים וסרטים של הילד לצרכי הסברה.
                 </p>
@@ -447,7 +461,10 @@ const ConsentPage = ({ onBack, onSubmit, tripDate, tripName }) => {
                     אנו מאשרים לכם או לב"כ לתת טיפול רפואי נדרש לפי שיקול דעת של הצוות הרפואי הנלווה למחנה, ומקבלים על עצמנו אחריות שלוחית וכספית לכל טיפול שיידרש. 
                     אנו מאשרים להעביר פרטים שלו לצוותים הרפואיים שיצטרכו לטפל בו.
                 </p>
-                <label>
+                </div>
+                
+                <div className="consent-part">
+                <label className="consent-checkbox">
                     <input 
                     type="checkbox"
                     checked={consentChecked}
@@ -455,21 +472,18 @@ const ConsentPage = ({ onBack, onSubmit, tripDate, tripName }) => {
                     />
                     אנו מאשרים.
                 </label>
-                <br />
-                <br />
-                <label>
+          
+                <label className="signing-date">
                     תאריך:
                     <input type="date" value={filledDate} onChange={handleFilledDate} />
                 </label>
-                <br />
-                <br />
-                <button type= "button" onClick={handleBack}>
-                    חזור
-                </button>
-                <button type="submit" onClick={handleSubmit}>שלח</button>
-                <BackToDashboardButton />
+             
+                </div>   
+                </div>
+                </div>
             </form>
             )}
+
         </div>
     );
 };
@@ -488,8 +502,8 @@ const CustomField = ({ label, value, onChange, hasOptions, hasDate, error }) => 
                 {label}:
                     <select value={value} onChange={handleChange}>
                         <option value=""></option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="Yes">כן</option>
+                        <option value="No">לא</option>
                     </select>
             </label>
             ) : hasDate ? (
@@ -511,7 +525,7 @@ const CustomField = ({ label, value, onChange, hasOptions, hasDate, error }) => 
 const SuccessSubmitPage = () => {
     return (
         <div>
-            <h1>טופס ההרשמה נשלח בהצלחה!</h1>
+            <h1 className='beautyHeadLine'>טופס ההרשמה נשלח בהצלחה!</h1>
             <BackToDashboardButton />
         </div>
         
