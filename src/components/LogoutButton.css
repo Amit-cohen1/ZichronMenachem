@@ -9,7 +9,7 @@
   transition: background-color 0.3s ease;
   margin-top: 0.5vh;
   margin-right: 5vw;
-  position: fixed;
+  position: absolute;
   top: 0.5vh;
   left: 0.5vw;
   
