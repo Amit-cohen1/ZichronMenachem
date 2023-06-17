@@ -4,7 +4,7 @@ import { doc, onSnapshot, setDoc, addDoc, updateDoc, collection, query, where, g
 import { firestore } from '../firebase';
 import {auth} from '../firebase';
 import LogoutButton from '../components/LogoutButton';
-import UploadDocuments from './UploadDocuments';
+import UploadDoc from './UploadDocuments';
 import MedicalHistory from '../components/MedicalHistory';
 import Background from '../components/Background';
 import '../pages/ParentDashboard.css'
@@ -231,8 +231,8 @@ const ParentDashboard = () => {
   // Handle input change event
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log(`name: ${name}`)
-    console.log(`value: ${value}`)
+    //console.log(`name: ${name}`)
+   // console.log(`value: ${value}`)
 
       setProfileData((prevData) => ({
         ...prevData,
@@ -245,7 +245,7 @@ const ParentDashboard = () => {
     const user = auth.currentUser;
     if (user) {
       setUserName(user.displayName);
-      console.log("ID:"+user.displayName);
+      //console.log("ID:"+user.displayName);
     }
   }, []);
   
@@ -260,7 +260,7 @@ const ParentDashboard = () => {
         <div className='parent-form'>
 
           <div id='btns' className="Buttones">
-            <UploadDocuments id={childID} />
+            <UploadDoc id={childID} />
             <MedicalHistory childID={childID} />
             <Link to = {"/camp-registration"}>
               <button className="searchBarBtn smaller-btn">הרשמה למחנה</button>
