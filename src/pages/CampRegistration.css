@@ -1,42 +1,110 @@
 
-
-  /*body, html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }*/
-
   .camp-reg-form {
-    /*width: 95%;*/ 
     margin: 0 auto;
   }
 
 .field-group {
     display: flex;
     flex-wrap: wrap;
-    /*margin-bottom: 20px;*/
-    gap: 10px;
+    gap: 2vh;
   }
   
   .field-group-inner {
     flex-basis: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    /*margin-right: -10px;*/
-    /*margin-bottom: 10px;*/
+
+  }
+
+  .field-group-inner input {
+    margin-right: 10px;
+  }
+  .field-group-inner select {
+    margin-right: 10px;
+  }
+  
+  .custom-field input{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
+    background-color: #fefefe;
+    border-radius: 2vh;
+    border: none;
+    width: 25vh;
+    height: 4vh;
+  }
+  
+  .custom-field select{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
+    background-color: #fefefe;
+    border-radius: 2vh;
+    border: none;
+    width: 10vh;
+    height: 4vh;
   }
 
   .custom-field label {
-    /*display: inline-block;*/
-    margin: 30px;
+    margin: 8px;
     float: left;
+    font-weight: bold;
+    color: #101010;
+    padding: 0.5rem 1rem;
+    font-family: 'Open Sans', sans-serif;
+    border: none;
   }
   
-  /*.field {
-    display: flex;
-    flex-direction: column;
-    margin-right: 10px;
-  }*/
+.consent-part {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.consent-part label {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  color: #101010;
+  text-align: center;
+}
+
+.signing-date {
+  margin-top: 15px;
+}
+.signing-date input {
+  margin-right: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: normal;
+  background-color: #fefefe;
+  border-radius: 2vh;
+  border: none;
+  width: 25vh;
+  height: 4vh;
+}
+.consent-checkbox input {
+  margin-left: 10px;
+}
+
+
+.buttons-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.back-buttons {
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.submit-btn {
+  margin-left: 10px;
+}
+.continue-btn {
+  margin-left: 10px;
+}
+
+
+
 
  
