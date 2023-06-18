@@ -81,6 +81,7 @@ body, html {
    font-weight: bold;
    text-align: center;
    color: black;
+   text-decoration: underline;
 }
 
 .user-list-container {

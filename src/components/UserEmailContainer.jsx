@@ -57,10 +57,12 @@ const UserEmailContainer = ({ userEmail }) => {
           </select>
         </label>
       </div>
-      <button onClick={handleClick} className="apply-button">
+      <button className="apply-button" onClick={handleClick}>
         החל
       </button>
-      <button id='delete-button' onClick={handleDel} className="delete-button">מחק משתמש</button>
+      <button className="delete-button" onClick={handleDel} 
+      >מחק משתמש
+      </button>
       <ToastContainer />
     </div>
   );
