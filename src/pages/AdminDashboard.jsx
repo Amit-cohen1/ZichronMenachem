@@ -7,7 +7,7 @@ import UserEmailContainer from '../components/UserEmailContainer';
 import './AdminDashboard.css';
 import LogoutButton from '../components/LogoutButton';
 import DefineTrip from '../components/DefineTrip';
-
+import UploadExcel from '../components/UploadExcel';
 const AdminDashboard = () => {
   const [userEmails, setUserEmails] = useState([]);
   const [showUserEmail, setShowUserEmail] = useState(false);
@@ -71,14 +71,15 @@ const AdminDashboard = () => {
     <Background>
       <div>
           <LogoutButton />
-        
+
       <h2 className="beautyHeadLine">שלום {userName}</h2>
 
       <div id="mangeBtn"> 
       <button id='btn12'  type="button" >ניהול מידע מערכת</button>
       <DefineTrip id='btn12'  />
       </div>
-
+        
+        <UploadExcel id='excle12' />
       <div className="containerMain">
         <div className="containerSearchBox">
           <input className='searchBarAdmin' type="text" placeholder="הכנס כתובת אימייל" value={searchTerm} onChange={handleSearchChange} />
