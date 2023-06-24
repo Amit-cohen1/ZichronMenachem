@@ -22,7 +22,7 @@ const ProfileField = ({ label, name, profileData, handleInputChange, isEditing, 
           name={name}
           value={profileData[name]}
           onChange={(e) => handleInputChange(e, name)}
-          disabled={!isEditing}
+          disabled={!isEditing || (name === 'id' && profileData.id)}
         />
     
       {error && <div className="error-input-message">{error}</div>}
@@ -164,6 +164,7 @@ const ParentDashboard = () => {
                 }
               })
               )
+              
             });
           } 
         }
@@ -234,11 +235,16 @@ const ParentDashboard = () => {
     //console.log(`name: ${name}`)
    // console.log(`value: ${value}`)
 
-      setProfileData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    };
+    // If the field is 'id' and it already has a value, return early
+    if (name === 'id' && profileData.id) {
+      return;
+    }
+    
+    setProfileData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
 
   useEffect(() => {
