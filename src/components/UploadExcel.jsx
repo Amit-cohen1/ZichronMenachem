@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import papa from 'papaparse'
 import { collection, addDoc, getFirestore} from "firebase/firestore";
 import 'react-toastify/dist/ReactToastify.css';
+import './UploadExcel.css';
 
 
 const UploadExcel = () => {
   const db = getFirestore();     
   const [file, setFile] = useState(null);
   const [parsedData,setparsedData] = useState([]);    
+  const [showPopup, setShowPopup] = useState(false);
+
   const[profileData, setProfileData] = useState({
         firstName: '',
         catheter: '',
@@ -62,16 +65,32 @@ const UploadExcel = () => {
             };
         });
       };   
+      const togglePopup = () => {
+        setShowPopup(!showPopup);
+      };
+      
     return (
     <div>
+      <button id='btn12' onClick={togglePopup}>
+      העלה מאקסל
+      </button>
+      {showPopup && (
+      <div className='popupExcel'>
+      <div className="popup-contentExel">
       <h2 className="beautyHeadLine">
+        העלאת קובץ אקסל
       </h2>
-      <div className='second-container'>
-        <input type="file" onChange={handleFileChange} />
-        <button className='upload-button' onClick={handleUpload}>
+      
+      <input className='input-login' type="file" onChange={handleFileChange} />
+      <button className='btnClose' onClick={handleUpload}>
           ביצוע
-        </button>
+      </button>
+      <button className="btnClose" onClick={togglePopup}>
+            סגור
+      </button>
       </div>
+      </div>
+      )}
     </div>
   );
 };

@@ -76,11 +76,12 @@ const AdminDashboard = () => {
       <h2 className="beautyHeadLine">שלום {userName}</h2>
 
       <div id="mangeBtn"> 
-      <button id='btn12'  type="button" >ניהול מידע מערכת</button>
+      <button id='btn12' type="button" >ניהול מידע מערכת</button>
       <DefineTrip id={doc.id}/>
+      <UploadExcel id='excle12' />
       </div>
         
-        <UploadExcel id='excle12' />
+        
       <div className="containerMain">
         <div className="containerSearchBox">
           <input className='searchBarAdmin' type="text" placeholder="הכנס כתובת אימייל" value={searchTerm} onChange={handleSearchChange} />
