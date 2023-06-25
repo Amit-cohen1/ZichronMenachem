@@ -7,6 +7,7 @@ import UserEmailContainer from '../components/UserEmailContainer';
 import './AdminDashboard.css';
 import LogoutButton from '../components/LogoutButton';
 import DefineTrip from '../components/DefineTrip';
+import InformationPage from '../pages/InformationPage';
 
 const AdminDashboard = () => {
   const [userEmails, setUserEmails] = useState([]);
@@ -76,7 +77,7 @@ const AdminDashboard = () => {
 
       <div id="mangeBtn"> 
       <button id='btn12'  type="button" >ניהול מידע מערכת</button>
-      <DefineTrip id='btn12'  />
+      <DefineTrip id={doc.id}/>
       </div>
 
       <div className="containerMain">
