@@ -3,7 +3,7 @@ import { collection, query, where, getDocs, getFirestore, updateDoc ,deleteDoc} 
 import './UserEmailContainer.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Auth ,getAuth} from 'firebase/auth';
 const db = getFirestore();
 
 const UserEmailContainer = ({ userEmail }) => {
@@ -16,7 +16,9 @@ const UserEmailContainer = ({ userEmail }) => {
     const qs = await getDocs(q);
     qs.forEach(async (doc) => {
       if(doc.exists) {
-        await deleteDoc(doc.ref);
+        await updateDoc(doc.ref, {
+          role: ""
+        });
         toast.success('משתמש נמחק בהצלחה');
       }
     });
@@ -55,10 +57,12 @@ const UserEmailContainer = ({ userEmail }) => {
           </select>
         </label>
       </div>
-      <button onClick={handleClick} className="apply-button">
+      <button className="apply-button" onClick={handleClick}>
         החל
       </button>
-      <button id='delete-button' onClick={handleDel} className="delete-button">מחק משתמש</button>
+      <button className="delete-button" onClick={handleDel} 
+      >מחק משתמש
+      </button>
       <ToastContainer />
     </div>
   );

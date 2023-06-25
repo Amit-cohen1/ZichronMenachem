@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, Router, Routes, Route, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { doc, onSnapshot, setDoc, addDoc, updateDoc, collection, query, where, getDocs, getDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import {auth} from '../firebase';
 import LogoutButton from '../components/LogoutButton';
-import UploadDocuments from './UploadDocuments';
+import UploadDoc from './UploadDocuments';
 import MedicalHistory from '../components/MedicalHistory';
 import Background from '../components/Background';
 import '../pages/ParentDashboard.css'
@@ -15,15 +15,16 @@ const ProfileField = ({ label, name, profileData, handleInputChange, isEditing, 
     <div className= "field-wrapper">
       <label className='label-parent'>
         {label}:
+        </label>
         <input
           className='input-parent'
           type="text"
           name={name}
           value={profileData[name]}
           onChange={(e) => handleInputChange(e, name)}
-          disabled={!isEditing}
+          disabled={!isEditing || (name === 'id' && profileData.id)}
         />
-      </label>
+    
       {error && <div className="error-input-message">{error}</div>}
     </div>
   );
@@ -47,17 +48,6 @@ const TextAreaField = ({ label, name, profileData,handleInputChange, isEditing }
 
 const ParentDashboard = () => {
   // Content and functionality for the parent dashboard
-
-  const handleLogout = () => {
-    auth.signOut()
-      .then(() => {
-        console.log('User logged out successfully');
-        // Perform any additional cleanup or redirection logic here
-      })
-      .catch((error) => {
-        console.error('Error logging out:', error);
-      });
-  };
 
   //State for profile data and editing mode
   const[profileData, setProfileData] = useState({
@@ -174,6 +164,7 @@ const ParentDashboard = () => {
                 }
               })
               )
+              
             });
           } 
         }
@@ -241,33 +232,26 @@ const ParentDashboard = () => {
   // Handle input change event
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log(`name: ${name}`)
-    console.log(`value: ${value}`)
+    //console.log(`name: ${name}`)
+   // console.log(`value: ${value}`)
 
-      setProfileData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    };
-
-  // function for the options below the patient details. takes to other pages.
-  const Square = ({ title, path }) => (
-      <div className="square">
-        <div className="square-content">
-        <h5>{title}</h5>
-        <Link to={path}>
-          <button>לחץ כאן</button>
-        </Link>
-      </div>
-      </div>
-  );
+    // If the field is 'id' and it already has a value, return early
+    if (name === 'id' && profileData.id) {
+      return;
+    }
+    
+    setProfileData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
 
   useEffect(() => {
     const user = auth.currentUser;
     if (user) {
       setUserName(user.displayName);
-      console.log("ID:"+user.displayName);
+      //console.log("ID:"+user.displayName);
     }
   }, []);
   
@@ -279,98 +263,61 @@ const ParentDashboard = () => {
     <div className='patientDetails'>
       <div>
         <h4 className='beautyHeadLine'>פרופיל ילד</h4>
-        <form className='parent-form'>
-          <div className="form-container">
-            <div className="form-group">
-            <div className="field-row">
+        <div className='parent-form'>
+
+          <div id='btns' className="Buttones">
+            <UploadDoc id={childID} />
+            <MedicalHistory childID={childID} />
+            <Link to = {"/camp-registration"}>
+              <button className="searchBarBtn smaller-btn">הרשמה למחנה</button>
+            </Link>      
+          </div>
+          <div className="edit-save">
+            {isEditing ? (
+            <button className= "searcgBarBtn smaller-btn" type="button" onClick={handleSaveClick}> שמור </button>
+            ) : (
+            <button className= "searcgBarBtn smaller-btn" type="button" onClick={handleEditClick}> ערוך </button>
+            )}
+            </div>
+            <div className="form-container">
               <ProfileField label="תעודת זהות" name="id" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.id}/>
               <ProfileField label="שם פרטי" name="firstName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} />
               <ProfileField label="שם משפחה" name="lastName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} />
-              </div>
-              <div className="field-row">
               <ProfileField label="תאריך לידה" name="birthDate" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.birthDate}/>
               <ProfileField label="תאריך לידה עברי" name="hebrewBirthDate" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
               <ProfileField label="גיל" name="age" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
               <ProfileField label="מין" name="gender" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          </div>
-          </div>
-          <div className="form-group">
-          <div className="field-row">
-            <ProfileField label="רופא מטפל" name="doctor" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-            <ProfileField label="טלפון רופא" name="docPhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.docPhoneNumber}/>
+              <ProfileField label="רופא מטפל" name="doctor" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="טלפון רופא" name="docPhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.docPhoneNumber}/>
+              <ProfileField label="קופת חולים" name="hmo" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="בית חולים" name="hospital" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="שם האם" name="motherName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="טלפון אם" name="momPhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.momPhoneNumber}/>
+              <ProfileField label="טלפון עבודה אם" name="momWorkPhone" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.momWorkPhone}/>
+              <ProfileField label="שם האב" name="fatherName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="טלפון אב" name="dadPhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.dadPhoneNumber}/>
+              <ProfileField label="טלפון עבודה אב" name="dadWorkPhone" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.dadWorkPhone}/>
+              <ProfileField label="טלפון בבית" name="homePhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.homePhoneNumber}/>
+              <ProfileField label="מייל" name="email" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.email}/>
+              <ProfileField label="מדריך אחראי" name="guide" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="כרטיס" name="card" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="עיר" name="city" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="רחוב" name="street" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="מספר בית" name="houseNum" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="מיקוד" name="postalCode" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.postalCode}/>
+              <ProfileField label="תאריך סיום טיפול אקטיבי" name="endActiveTreatment" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.endActiveTreatment}/>
+              <ProfileField label="סוג אבחנה" name="diagnosis" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="צנתר" name="catheter" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              <ProfileField label="רגישויות" name="allergies" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+            <div>
+              <form className="textArea-field">
+                <TextAreaField label="תרופות" name="medicines" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+                <TextAreaField label="הערות נוספות" name="comments" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
+              </form>
             </div>
-            <div className="field-row">
-            <ProfileField label="קופת חולים" name="hmo" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-            <ProfileField label="בית חולים" name="hospital" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-            </div>
           </div>
-          <div className="form-group">
-          <div className="field-row">
-          <ProfileField label="שם האם" name="motherName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="טלפון אם" name="momPhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.momPhoneNumber}/>
-          <ProfileField label="טלפון עבודה אם" name="momWorkPhone" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.momWorkPhone}/>
-          </div>
-          <div className="field-row">
-          <ProfileField label="שם האב" name="fatherName" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="טלפון אב" name="dadPhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.dadPhoneNumber}/>
-          <ProfileField label="טלפון עבודה אב" name="dadWorkPhone" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.dadWorkPhone}/>
-          </div>
-          <div className="field-row">
-          <ProfileField label="טלפון בבית" name="homePhoneNumber" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.homePhoneNumber}/>
-          <ProfileField label="מייל" name="email" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.email}/>
-          </div>
-          </div>
-          <div className="form-group">
-          <div className="field-row">
-          <ProfileField label="מדריך אחראי" name="guide" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="כרטיס" name="card" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          </div>
-          </div>
-          <div className="form-group">
-          <div className="field-row">
-          <ProfileField label="עיר" name="city" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="רחוב" name="street" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="מספר בית" name="houseNum" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="מיקוד" name="postalCode" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.postalCode}/>
-          </div>
-          </div>
-          <div className="form-group">
-          <div className="field-row">
-          <ProfileField label="תאריך סיום טיפול אקטיבי" name="endActiveTreatment" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing} error={errors.endActiveTreatment}/>
-          <ProfileField label="סוג אבחנה" name="diagnosis" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <ProfileField label="צנתר" name="catheter" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          </div>
-          <div className="field-row">
-          <ProfileField label="רגישויות" name="allergies" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          </div>
-          </div>
-          </div>
-        </form>
+        </div>
       </div>
-
-      <div>
-        <form className="textArea-field">
-          <TextAreaField label="תרופות" name="medicines" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-          <TextAreaField label="הערות נוספות" name="comments" profileData={profileData} handleInputChange={handleInputChange} isEditing={isEditing}/>
-        </form>
-      </div>
-
-      <div>
-      {isEditing ? (
-      <button className= "searcgBarBtn smaller-btn" type="button" onClick={handleSaveClick}> שמור </button>
-      ) : (
-      <button className= "searcgBarBtn smaller-btn" type="button" onClick={handleEditClick}> ערוך </button>
-      )}
-      </div>
-
-      <div className="Buttones-parent">
-        <UploadDocuments id={childID} />
-        <MedicalHistory childID={childID} />
-        <Link to = {"/camp-registration"}>
-          <button className="searchBarBtn smaller-btn">הרשמה למחנה</button>
-        </Link>      
-      </div>
-
     </div>
     </Background>
   );

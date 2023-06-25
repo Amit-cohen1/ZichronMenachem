@@ -40,6 +40,7 @@ html {
   border: none;
   border-radius: 2vh;
   cursor: pointer;
+  font-weight: bolder;
 }
 
 .search-Bar {
@@ -49,10 +50,12 @@ html {
 }
 
 .searchBarBtn {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
   width: 12vw;
   height: 5vh;
-  font-size: 1.7vh;
-  background-color: #a4d65e;
+  font-size: 2vh;
+  background-color: #b9f06a;
   font-weight: bold;
   color: black;
   border: none;
@@ -68,7 +71,7 @@ html {
 }
 
 .searchBarBtn:hover {
-  background-color: #86b93d;
+  background-color: #b9f06a;
 }
 
 .patient-details {
@@ -100,6 +103,7 @@ html {
   margin-right: 1rem;
   color: #101010;
   padding: 0.5rem 1rem;
+  width: 25%;
 }
 
 .detail-value {
@@ -107,6 +111,7 @@ html {
   background-color: #fefefe;
   padding: 0.5rem 1rem;
   border-radius: 2vh;
+  width: 45%;
 }
 
 /* Scrollbar styles */
@@ -204,7 +209,7 @@ html {
   margin: 0 1vw;
   padding: 1vh 2vw;
   font-size: 1.7vh;
-  background-color: #a4d65e;
+  background-color: #b9f06a;
   color: black;
   font-weight: bold;
   border: none;
@@ -213,7 +218,7 @@ html {
 }
 
 .smaller-btn:hover {
-  background-color: #a4d65e;
+  background-color: #b9f06a;
 }
 
 .popup-container {

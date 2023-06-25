@@ -7,7 +7,7 @@ import UserEmailContainer from '../components/UserEmailContainer';
 import './AdminDashboard.css';
 import LogoutButton from '../components/LogoutButton';
 import DefineTrip from '../components/DefineTrip';
-import InformationPage from '../pages/InformationPage';
+import UploadExcel from '../components/UploadExcel';
 
 const AdminDashboard = () => {
   const [userEmails, setUserEmails] = useState([]);
@@ -72,31 +72,35 @@ const AdminDashboard = () => {
     <Background>
       <div>
           <LogoutButton />
-        
+
       <h2 className="beautyHeadLine">שלום {userName}</h2>
 
       <div id="mangeBtn"> 
       <button id='btn12'  type="button" >ניהול מידע מערכת</button>
       <DefineTrip id={doc.id}/>
       </div>
-
+        
+        <UploadExcel id='excle12' />
       <div className="containerMain">
         <div className="containerSearchBox">
           <input className='searchBarAdmin' type="text" placeholder="הכנס כתובת אימייל" value={searchTerm} onChange={handleSearchChange} />
           <button className='AdminBtn1' type="button" value={searchTerm} onClick={handleSearchSubmit}>חפש</button>
-          {showUserEmail && <UserEmailContainer userEmail={userEmail} />}
+          {showUserEmail && <UserEmailContainer userEmail={userEmail} />} 
         </div>
 
         <p/>
         <p className="displayBtn"> <button className='AdminBtn2' type="button" onClick={handleAlot}>הצג משתמשים חדשים</button></p>
-        <h3 className="Headline">רשימת משתמשים חדשים</h3>
+        
         <div id="userListContainer" className={`user-list-container ${handleAlotClicked ? 'show' : ''}`}>
          
           {handleAlotClicked && userEmails.length > 0 ? (
+            <div>
+              <h3 className="Headline">רשימת משתמשים חדשים</h3>
             <div className="user-list">
               {userEmails.map((email, index) => (
                 <UserEmailContainer key={index} userEmail={email} />
               ))}
+            </div>
             </div>
           ) : (
             handleAlotClicked && userEmails.length === 0 && <p>No users found</p>
