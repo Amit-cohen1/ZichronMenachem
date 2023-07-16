@@ -7,6 +7,7 @@ import LogoutButton from '../components/LogoutButton';
 import UploadDocuments from './UploadDocuments';
 import DoctorMeet from '../components/DoctorMeet';
 import MedicalHistory from '../components/MedicalHistory';
+import Medicine from '../components/Medicine';
 
 const searchPatientById = async (patientId, setSearchResults, setInitialLoad) => {
   try {
@@ -66,9 +67,10 @@ const MedicalStaffDashboard = () => {
         {!initialLoad && searchResults.length > 0 && (
           <div className="results">
             <div className="Buttones">
-               <UploadDocuments userId={searchResults[0].id} />
+              <UploadDocuments userId={searchResults[0].id} />
               <MedicalHistory childID={searchResults[0].id}/>
               <DoctorMeet userName={userName} childID={searchResults[0].id}/>
+              <Medicine childID={searchResults[0].id}/>
             </div>
 
             <h3 id='uniqe' className="beautyHeadLine">פרטי מטופל:</h3>

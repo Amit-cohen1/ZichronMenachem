@@ -5,71 +5,80 @@ import 'react-toastify/dist/ReactToastify.css';
 import './UploadExcel.css';
 
 
+
 const UploadExcel = () => {
   const db = getFirestore();     
   const [file, setFile] = useState(null);
   const [parsedData,setparsedData] = useState([]);    
   const [showPopup, setShowPopup] = useState(false);
 
-  const[profileData, setProfileData] = useState({
-        firstName: '',
-        catheter: '',
-        docPhoneNumber: '',
-        hebrewBirthDate: '',
-        homePhoneNumber: '',
-        momWorkPhone: '',
-        dadWorkPhone: '',
-        allergies: '',
-        medicines: '',
-        comments: '',
-        lastName: '',
-        id:'',
-        doctor: '',
-        hmo: '',
-        motherName: '',
-        fatherName: '',
-        birthDate: '',
-        guide: '',
-        gender: '',
-        card: '',
-        age: '',
-        momPhoneNumber: '',
-        dadPhoneNumber: '',
-        email: '',
-        city: '',
-        street: '',
-        houseNum: '',
-        postalCode: '',
-        hospital: '',
-        endActiveTreatment: '',
-        diagnosis: '',
-        
-      })
-    const handleFileChange = (event) => {
+
+const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
         setFile(selectedFile);
-      };
-    const handleUpload =async () =>{
-        if(file){
-            papa.parse(file,{
-                header: true,
-                complete: results =>{
-                    setparsedData(results.data);
-                },
-            });
-        }
-        console.log(parsedData);
-        parsedData.forEach( async data => {
-          if(data.age != ""){
-            await addDoc(collection(db, 'Childrens'), data)
+  };
+  const handleUpload = async () => {
+    if (file) {
+      papa.parse(file, {
+        header: true,
+        encoding: "ISO-8859-8",
+        complete: (results) => {
+          const dataEntries = results.data;
+          setparsedData(dataEntries);
+  
+          dataEntries.forEach(async (data) => {
+            const profile = {
+              firstName: data.firstName || "",
+              catheter: data.catheter || "",
+              docPhoneNumber: data.docPhoneNumber || "",
+              hebrewBirthDate: data.hebrewBirthDate || "",
+              homePhoneNumber: data.homePhoneNumber || "",
+              momWorkPhone: data.momWorkPhone || "",
+              dadWorkPhone: data.dadWorkPhone || "",
+              allergies: data.allergies || "",
+              medicines: data.medicines || "",
+              comments: data.comments || "",
+              lastName: data.lastName || "",
+              id: data.id || "",
+              doctor: data.doctor || "",
+              hmo: data.hmo || "",
+              motherName: data.motherName || "",
+              fatherName: data.fatherName || "",
+              birthDate: data.birthDate || "",
+              guide: data.guide || "",
+              gender: data.gender || "",
+              card: data.card || "",
+              age: data.age || "",
+              momPhoneNumber: data.momPhoneNumber || "",
+              dadPhoneNumber: data.dadPhoneNumber || "",
+              email: data.email || "",
+              city: data.city || "",
+              street: data.street || "",
+              houseNum: data.houseNum || "",
+              postalCode: data.postalCode || "",
+              hospital: data.hospital || "",
+              endActiveTreatment: data.endActiveTreatment || "",
+              diagnosis: data.diagnosis || "",
             };
-        });
-      };   
+  
+            const hasNonEmptyAttribute = Object.values(profile).some((value) => value !== "");
+  
+            if (hasNonEmptyAttribute) {
+              await addDoc(collection(db, "Childrens"), profile);
+              console.log("Document successfully written!");  
+            }
+          });
+        },
+      });
+    }
+  };
+  
+      
       const togglePopup = () => {
         setShowPopup(!showPopup);
-      };
+  };
       
-    return (
+  return (
     <div>
       <button id='btn12' onClick={togglePopup}>
       העלה מאקסל
